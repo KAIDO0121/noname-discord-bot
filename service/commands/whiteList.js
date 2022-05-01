@@ -1,7 +1,6 @@
 const Discord = require("discord.js");
-const db = require("quick.db");
 module.exports = {
-  name: "trustedlist",
+  name: "add_white_list",
   description: "Vouch Users",
   run: async (client, message, args) => {
     let guild = message.guild.iconURL();
