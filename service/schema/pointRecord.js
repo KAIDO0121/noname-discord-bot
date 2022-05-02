@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
 
-const serverSchema = new mongoose.Schema({
-  name: String,
+const pointRecordSchema = new mongoose.Schema({
   serverId: String,
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
-  levels: {},
-  whiteLists: [],
+  eventType: String,
+  amount: Number,
+  userDiscordId: String,
 });
 
 module.exports = {
-  Server: mongoose.model("Server", serverSchema),
+  PointRecord: mongoose.model("PointRecord", pointRecordSchema),
 };

@@ -1,14 +1,13 @@
 const mongoose = require("mongoose");
 
-const serverSchema = new mongoose.Schema({
-  name: String,
+const serverPointSchema = new mongoose.Schema({
   serverId: String,
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
-  levels: {},
-  whiteLists: [],
+  totalPoints: Number,
+  userDiscordId: String,
 });
 
 module.exports = {
-  Server: mongoose.model("Server", serverSchema),
+  ServerPoint: mongoose.model("ServerPoint", serverPointSchema),
 };
