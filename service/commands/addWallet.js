@@ -1,4 +1,7 @@
 const { User } = require("../schema/user");
+const { updateServerPoints } = require("../crud/updateServerPoints");
+const { updatePointAdjustLog } = require("../crud/updatePointAdjustLog");
+const { eventType, eventPoint } = require("../config");
 const { error, success } = require("../utils/msgTemplate");
 
 module.exports = {
@@ -31,10 +34,31 @@ module.exports = {
     } else {
       user.walletAddress.push(args["wallet_address"]);
       await user.save();
-      return interaction.channel.send({
+
+      await updateServerPoints({
+        serverId: interaction.guildId,
+        userDiscordId: interaction.member.id,
+        point: eventPoint.add_wallet,
+      });
+
+      await updatePointAdjustLog({
+        amount: eventPoint.add_wallet,
+        serverId: interaction.guildId,
+        userDiscordId: interaction.member.id,
+        eventType: eventType.add_wallet,
+      });
+
+      interaction.channel.send({
         embeds: [
           success({
             msg: `Address :${args["wallet_address"]} added successfully`,
+          }),
+        ],
+      });
+      interaction.channel.send({
+        embeds: [
+          success({
+            msg: `You recieved :${process.env.ADD_WALLET_POINTS} points`,
           }),
         ],
       });

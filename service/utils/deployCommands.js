@@ -2,6 +2,7 @@ const { REST } = require("@discordjs/rest");
 const Discord = require("discord.js");
 const { Routes } = require("discord-api-types/v9");
 const { Server } = require("../schema/server");
+const { deployEvents } = require("../utils/deployEvents");
 const fs = require("node:fs");
 
 module.exports = {
@@ -24,22 +25,22 @@ module.exports = {
     );
 
     (async () => {
-      try {
-        console.log("Started refreshing application (/) commands.");
-        const servers = await Server.find();
-        servers.forEach(async (guild) => {
-          await rest.put(
+      console.log("Started refreshing application (/) commands.");
+      const servers = await Server.find();
+      servers.forEach(async (guild) => {
+        try {
+          const res = await rest.put(
             Routes.applicationGuildCommands(clientId, guild.serverId),
             {
               body: client.commands,
             }
           );
-        });
-
-        console.log("Successfully reloaded application (/) commands.");
-      } catch (error) {
-        console.error(error);
-      }
+        } catch (error) {
+          console.error(error);
+        }
+      });
+      console.log("Successfully reloaded application (/) commands.");
+      deployEvents(client);
     })();
   },
 };

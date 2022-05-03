@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
 
-const pointRecordSchema = new mongoose.Schema({
+const eventTypeSchema = new mongoose.Schema({
   serverId: String,
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
-  eventType: String,
-  amount: Number,
-  userDiscordId: String,
+  label: String,
+  description: String,
+  value: Number,
 });
 
 module.exports = {
-  PointRecord: mongoose.model("PointRecord", pointRecordSchema),
+  EventType: mongoose.model("EventType", eventTypeSchema),
 };

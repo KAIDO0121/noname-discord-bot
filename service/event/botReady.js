@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const { deployCommands } = require("../utils/deployCommands");
-const { deployEvents } = require("../utils/deployEvents");
 
 module.exports = {
   botReady: () => {
@@ -17,7 +16,6 @@ module.exports = {
     client.on("ready", () => {
       console.log(`${client.user.tag} has logged in.`);
       deployCommands(client);
-      deployEvents(client);
     });
   },
 };
