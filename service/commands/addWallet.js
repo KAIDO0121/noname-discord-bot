@@ -1,7 +1,7 @@
 const { User } = require("../schema/user");
 const { updateServerPoints } = require("../crud/updateServerPoints");
 const { updatePointAdjustLog } = require("../crud/updatePointAdjustLog");
-const { eventType, eventPoint } = require("../config");
+const { eventType, eventPoint, typeToPoint } = require("../config");
 const { error, success } = require("../utils/msgTemplate");
 
 module.exports = {
@@ -17,19 +17,22 @@ module.exports = {
   ],
 
   run: async (client, interaction, args) => {
-    const user = await User.findOne({ serverIds: interaction.guildId });
+    const user = await User.findOne({
+      serverIds: interaction.guildId,
+      discordId: interaction.user.id,
+    });
 
     if (!user) {
-      return interaction.channel.send({
-        embeds: [error({ msg: `You have to register before adding a wallet` })],
+      return error({
+        msg: `You have to register before adding a wallet`,
+        interaction,
       });
     }
 
     if (user.walletAddress.includes(args["wallet_address"])) {
-      return interaction.channel.send({
-        embeds: [
-          error({ msg: `Address :${args["wallet_address"]} already exists` }),
-        ],
+      return error({
+        msg: `Address :${args["wallet_address"]} already exists`,
+        interaction,
       });
     } else {
       user.walletAddress.push(args["wallet_address"]);
@@ -37,30 +40,24 @@ module.exports = {
 
       await updateServerPoints({
         serverId: interaction.guildId,
-        userDiscordId: interaction.member.id,
+        userDiscordId: interaction.user.id,
         point: eventPoint.add_wallet,
       });
 
       await updatePointAdjustLog({
         amount: eventPoint.add_wallet,
         serverId: interaction.guildId,
-        userDiscordId: interaction.member.id,
+        userDiscordId: interaction.user.id,
         eventType: eventType.add_wallet,
       });
 
-      interaction.channel.send({
-        embeds: [
-          success({
-            msg: `Address :${args["wallet_address"]} added successfully`,
-          }),
-        ],
+      success({
+        msg: `Address :${args["wallet_address"]} added successfully`,
+        interaction,
       });
-      interaction.channel.send({
-        embeds: [
-          success({
-            msg: `You recieved :${process.env.ADD_WALLET_POINTS} points`,
-          }),
-        ],
+      success({
+        msg: `You recieved :${typeToPoint.add_wallet} points`,
+        interaction,
       });
     }
   },

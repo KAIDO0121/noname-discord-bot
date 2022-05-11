@@ -25,32 +25,35 @@ module.exports = {
   run: async (client, interaction, args) => {
     try {
       const eventType = args["event_type"];
-      const user = await User.findOne({ discordName: args["user_name"] });
+
+      const user = await User.findOne({
+        serverIds: interaction.guildId,
+        discordName: args["user_name"],
+      });
+
       if (!user) {
-        return interaction.channel.send({
-          embeds: [error({ msg: `User :${args["user_name"]} not found` })],
+        return error({
+          msg: `User name : ${args["user_name"]} not found, most likely not registered or wrong user name`,
+          interaction,
         });
       }
 
       await updateServerPoints({
         serverId: interaction.guildId,
-        userDiscordId: interaction.member.id,
+        userDiscordId: interaction.user.id,
         point: typeToPoint[eventType],
       });
 
       await updatePointAdjustLog({
         amount: typeToPoint[eventType],
         serverId: interaction.guildId,
-        userDiscordId: interaction.member.id,
+        userDiscordId: interaction.user.id,
         eventType: eventType,
       });
 
-      return interaction.channel.send({
-        embeds: [
-          success({
-            msg: `Successfully adjust: ${typeToPoint[eventType]} points for ${args["user_name"]}`,
-          }),
-        ],
+      return success({
+        msg: `Successfully adjust: ${typeToPoint[eventType]} points for ${args["user_name"]}`,
+        interaction,
       });
     } catch (error) {
       console.log(error);

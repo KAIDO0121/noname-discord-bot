@@ -1,4 +1,4 @@
-const { ServerPoint } = require("../schema/ServerPoint");
+const { ServerPoint } = require("../schema/serverPoint");
 
 module.exports = {
   updateServerPoints: async ({ point, serverId, userDiscordId }) => {

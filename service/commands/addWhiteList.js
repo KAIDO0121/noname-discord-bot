@@ -18,20 +18,16 @@ module.exports = {
 
       if (!server.whiteLists) server.whiteLists = [];
       if (server.whiteLists.includes(args["white_list_name"])) {
-        return interaction.channel.send({
-          embeds: [
-            error({ msg: `List :${args["white_list_name"]} already exists` }),
-          ],
+        return error({
+          msg: `List :${args["white_list_name"]} already exists`,
+          interaction,
         });
       }
       server.whiteLists.push(args["white_list_name"]);
       await server.save();
-      return interaction.channel.send({
-        embeds: [
-          success({
-            msg: `List :${args["white_list_name"]} added successfully`,
-          }),
-        ],
+      return success({
+        msg: `List :${args["white_list_name"]} added successfully`,
+        interaction,
       });
     } catch (error) {
       console.log(error);
