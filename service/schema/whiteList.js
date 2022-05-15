@@ -5,6 +5,7 @@ const whiteListSchema = new mongoose.Schema({
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now },
   users: [],
+  serverId: String,
 });
 
 module.exports = {
