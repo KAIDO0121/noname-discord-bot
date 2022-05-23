@@ -5,7 +5,7 @@ const { botReady } = require("./event/botReady");
 
 async function main() {
   try {
-    await mongoose.connect(process.env.MONGO_DB_URI_LOCAL);
+    await mongoose.connect(process.env.MONGO_DB_URI);
   } catch (error) {
     console.error(error);
   }
