@@ -5,13 +5,13 @@ const { eventType, eventPoint, typeToPoint } = require("../config");
 const { error, success } = require("../utils/msgTemplate");
 
 module.exports = {
-  name: "add_wallet",
-  description: "Add wallet address",
+  name: "remove_wallet",
+  description: "Remove a wallet address",
   options: [
     {
       type: 3,
       name: "wallet_address",
-      description: "Register your address for claiming whitelist",
+      description: "Enter the address you want to remove",
       required: true,
     },
   ],
@@ -24,19 +24,16 @@ module.exports = {
 
     if (!user) {
       return error({
-        msg: `You have to register before adding a wallet`,
+        msg: `You have to register before removing a wallet`,
         interaction,
       });
     }
 
-    if (!user.walletAddress[interaction.guildId])
-      user.walletAddress[interaction.guildId] = [];
-
     if (
-      user.walletAddress[interaction.guildId].includes(args["wallet_address"])
+      !user.walletAddress[interaction.guildId].includes(args["wallet_address"])
     ) {
       return error({
-        msg: `Address :${args["wallet_address"]} already exists`,
+        msg: `Address :${args["wallet_address"]} doesn't exist`,
         interaction,
       });
     } else {
@@ -47,7 +44,7 @@ module.exports = {
             serverIds: interaction.guildId,
             discordId: interaction.user.id,
           },
-          { $push: { [s]: args["wallet_address"] } }
+          { $pullAll: { [s]: [args["wallet_address"]] } }
         );
       } catch (error) {
         console.log(error);
@@ -56,18 +53,18 @@ module.exports = {
       await updateServerPoints({
         serverId: interaction.guildId,
         userDiscordId: interaction.user.id,
-        point: typeToPoint[eventType.add_wallet],
+        point: typeToPoint[eventType.remove_wallet],
       });
 
       await updatePointAdjustLog({
-        amount: typeToPoint[eventType.add_wallet],
+        amount: typeToPoint[eventType.remove_wallet],
         serverId: interaction.guildId,
         userDiscordId: interaction.user.id,
-        eventType: eventType.add_wallet,
+        eventType: eventType.remove_wallet,
       });
 
       success({
-        msg: `Address :${args["wallet_address"]} added successfully. You recieved : ${typeToPoint.add_wallet} points`,
+        msg: `Address :${args["wallet_address"]} removed successfully. You lost : ${typeToPoint.add_wallet} points`,
         interaction,
       });
     }

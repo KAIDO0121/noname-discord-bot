@@ -9,6 +9,7 @@ const eventType = {
   advisor: "advisor",
   invite: "invite",
   add_wallet: "add_wallet",
+  remove_wallet: "remove_wallet",
   mee6: "mee6",
 };
 const typeToPoint = {
@@ -20,6 +21,7 @@ const typeToPoint = {
   advisor: 87,
   invite: 5,
   add_wallet: 50,
+  remove_wallet: -50,
   mee6: 6,
 };
 const eventPoint = [
@@ -59,12 +61,19 @@ const eventPoint = [
     name: "add_wallet",
     value: eventType.add_wallet,
   },
+  {
+    name: "remove_wallet",
+    value: eventType.remove_wallet,
+  },
 ];
+
+const noNameServerId = "968131609163358259";
 
 module.exports = {
   eventType,
   typeToPoint,
   eventPoint,
+  noNameServerId,
 };
 
 // 自我介紹, 二創, ⽐賽活動, 群內活躍, 疑難雜症解答, 提供建議, 邀請人數, 綁定錢包, Mee6 等級
