@@ -28,7 +28,12 @@ module.exports = {
         interaction,
       });
     }
-
+    if (!user?.walletAddress) {
+      return error({
+        msg: `Address :${args["wallet_address"]} doesn't exist`,
+        interaction,
+      });
+    }
     if (
       !user?.walletAddress[interaction.guildId]?.includes(args["wallet_address"])
     ) {

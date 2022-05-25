@@ -28,8 +28,14 @@ module.exports = {
         interaction,
       });
     }
-    if (!user?.walletAddress)
-      user.walletAddress[interaction.guildId] = [];
+    if (!user?.walletAddress) {
+      user = {
+        ...user,
+        walletAddress: {
+          [interaction.guildId]: []
+        }
+      }
+    }
     if (!user?.walletAddress[interaction.guildId])
       user.walletAddress[interaction.guildId] = [];
 
