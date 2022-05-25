@@ -30,6 +30,7 @@ module.exports = {
         serverId: interaction.guildId,
         users: args["user_to_remove"],
       });
+
       if (!server || !list) {
         return error({
           msg: `Can't find List :${args["white_list_name"]}`,
@@ -37,7 +38,7 @@ module.exports = {
         });
       }
 
-      if (!list.users.includes(args["user_to_remove"])) {
+      if (!list?.users?.includes(args["user_to_remove"])) {
         return error({
           msg: `Can't find user in list : ${args["white_list_name"]}`,
           interaction,

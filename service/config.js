@@ -26,43 +26,43 @@ const typeToPoint = {
 };
 const eventPoint = [
   {
-    name: "self_introduce",
+    name: "self_introduce", // 自我介紹
     value: eventType.self_introduce,
   },
   {
-    name: "fanart",
+    name: "fanart", // 二創
     value: eventType.fanart,
   },
   {
-    name: "contest",
+    name: "contest", // ⽐賽活動
     value: eventType.contest,
   },
   {
-    name: "active_user",
+    name: "active_user", // 群內活躍
     value: eventType.active_user,
   },
   {
-    name: "best_answer",
+    name: "best_answer", // 疑難雜症解答
     value: eventType.best_answer,
   },
   {
-    name: "invite",
+    name: "invite", // 邀請人數
     value: eventType.invite,
   },
   {
-    name: "advisor",
+    name: "advisor", // 提供建議
     value: eventType.advisor,
   },
   {
-    name: "mee6",
+    name: "mee6", // Mee6 等級
     value: eventType.mee6,
   },
   {
-    name: "add_wallet",
+    name: "add_wallet", // 綁定錢包
     value: eventType.add_wallet,
   },
   {
-    name: "remove_wallet",
+    name: "remove_wallet", // 解除綁定錢包
     value: eventType.remove_wallet,
   },
 ];

@@ -1,4 +1,5 @@
 const { ServerPoint } = require("../schema/serverPoint");
+const { User } = require("../schema/user");
 const { error, success } = require("../utils/msgTemplate");
 
 module.exports = {
@@ -6,29 +7,36 @@ module.exports = {
   description: "Check user points at this server",
   options: [
     {
-      type: 3,
-      name: "user_name",
-      description: "Enter the user name you want to check",
+      type: 6,
+      name: "user",
+      description: "Enter the user id you want to check(複製ID)",
       required: true,
     },
   ],
-  run: async (client, interaction) => {
+  run: async (client, interaction, args) => {
     try {
       const point = await ServerPoint.findOne({
         serverId: interaction.guildId,
-        userDiscordId: args["user_name"],
+        userDiscordId: args["user"],
+      });
+
+      const user = await User.findOne({
+        serverIds: interaction.guildId,
+        discordId: args["user"],
       });
 
       if (!point) {
         return error({
-          msg: `User : ${args["user_name"]} didn't have any point at this server`,
+          msg: `User : ${user.discordName} didn't have any point at this server`,
           interaction,
         });
       }
       return success({
-        msg: `User : ${args["user_name"]} have ${point.totalPoints} points at this server`,
+        msg: `User : ${user.discordName} have ${point.totalPoints} points at this server`,
         interaction,
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error)
+    }
   },
 };

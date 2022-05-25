@@ -16,7 +16,7 @@ module.exports = {
         interaction,
       });
     }
-    if (!user.walletAddress[interaction.guildId].length) {
+    if (!user.walletAddress[interaction.guildId]?.length) {
       return success({
         msg: `You haven't add any address yet`,
         interaction,

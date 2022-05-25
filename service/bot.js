@@ -4,10 +4,12 @@ const { eventPoint, typeToPoint, noNameServerId } = require("./config");
 const mongoose = require("mongoose");
 const { botReady } = require("./event/botReady");
 const express = require("express");
+const res = require('express/lib/response')
 const app = express();
 app.get("/", async function (req, res) {
   res.send('root');
 })
+
 app.get("/adminLogs", async function (req, res) {
   console.log('/adminLogs entry')
   try {

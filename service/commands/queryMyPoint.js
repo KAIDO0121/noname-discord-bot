@@ -11,6 +11,8 @@ module.exports = {
         userDiscordId: interaction.user.id,
       });
 
+      console.log(point, 'point')
+
       if (!point) {
         return error({
           msg: `You didn't have any point at this server`,

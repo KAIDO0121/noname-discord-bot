@@ -26,7 +26,7 @@ module.exports = {
           interaction,
         });
       } else {
-        if (user.serverIds.includes(interaction.guildId)) {
+        if (user?.serverIds?.includes(interaction.guildId)) {
           return error({
             msg: `${interaction.member.user.username} already exists in this server`,
             interaction,

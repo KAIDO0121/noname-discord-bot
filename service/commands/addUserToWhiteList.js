@@ -37,7 +37,7 @@ module.exports = {
           interaction,
         });
       }
-      if (list.users.includes(args["user_to_add"])) {
+      if (list?.users?.includes(args["user_to_add"])) {
         return error({
           msg: `User already exists in ${args["white_list_name"]}`,
           interaction,

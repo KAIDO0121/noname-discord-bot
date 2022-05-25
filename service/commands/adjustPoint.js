@@ -9,9 +9,9 @@ module.exports = {
   description: "Adjust point for user",
   options: [
     {
-      type: 3,
-      name: "user_id",
-      description: "Input adjustment user id(複製ID)",
+      type: 6,
+      name: "user",
+      description: "Input adjustment user",
       required: true,
     },
     {
@@ -21,6 +21,12 @@ module.exports = {
       required: true,
       choices: eventPoint,
     },
+    {
+      type: 3,
+      name: "point",
+      description: "How many point you want to adjust",
+      required: true,
+    },
   ],
   run: async (client, interaction, args) => {
     try {
@@ -28,12 +34,12 @@ module.exports = {
 
       const user = await User.findOne({
         serverIds: interaction.guildId,
-        discordId: args["user_id"],
+        discordId: args["user"],
       });
 
       if (!user) {
         return error({
-          msg: `User id : ${args["user_id"]} not found, most likely not registered or wrong user name`,
+          msg: `User id : ${args["user"]} not found, most likely not registered or wrong user name`,
           interaction,
         });
       }
@@ -41,18 +47,18 @@ module.exports = {
       await updateServerPoints({
         serverId: interaction.guildId,
         userDiscordId: interaction.user.id,
-        point: typeToPoint[eventType],
+        point: args['point'],
       });
 
       await updatePointAdjustLog({
-        amount: typeToPoint[eventType],
+        amount: args['point'],
         serverId: interaction.guildId,
         userDiscordId: interaction.user.id,
         eventType: eventType,
       });
 
       return success({
-        msg: `Successfully adjust: ${typeToPoint[eventType]} points for ${user.discordName}`,
+        msg: `Successfully adjust: ${args['point']} points for ${user.discordName}`,
         interaction,
       });
     } catch (error) {

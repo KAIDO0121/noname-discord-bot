@@ -17,7 +17,7 @@ module.exports = {
     try {
       const server = await Server.findOne({ serverId: interaction.guildId });
 
-      if (!server.whiteLists.includes(args["white_list_name"])) {
+      if (!server?.whiteLists.includes(args["white_list_name"])) {
         return error({
           msg: `List :${args["white_list_name"]} not found`,
           interaction,

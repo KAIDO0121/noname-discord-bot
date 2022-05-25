@@ -29,11 +29,11 @@ module.exports = {
       });
     }
 
-    if (!user.walletAddress[interaction.guildId])
+    if (!user?.walletAddress[interaction.guildId])
       user.walletAddress[interaction.guildId] = [];
 
     if (
-      user.walletAddress[interaction.guildId].includes(args["wallet_address"])
+      user?.walletAddress[interaction.guildId]?.includes(args["wallet_address"])
     ) {
       return error({
         msg: `Address :${args["wallet_address"]} already exists`,
