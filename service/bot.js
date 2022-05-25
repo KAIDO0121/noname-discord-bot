@@ -5,8 +5,11 @@ const mongoose = require("mongoose");
 const { botReady } = require("./event/botReady");
 const express = require("express");
 const app = express();
-
+app.get("/", async function (req, res) {
+  res.send('root');
+})
 app.get("/adminLogs", async function (req, res) {
+  console.log('/adminLogs entry')
   try {
     const users = await User.aggregate([
       {
