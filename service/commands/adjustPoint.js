@@ -33,7 +33,7 @@ module.exports = {
 
       if (!user) {
         return error({
-          msg: `User name : ${args["user_name"]} not found, most likely not registered or wrong user name`,
+          msg: `User id : ${args["user_id"]} not found, most likely not registered or wrong user name`,
           interaction,
         });
       }
@@ -52,7 +52,7 @@ module.exports = {
       });
 
       return success({
-        msg: `Successfully adjust: ${typeToPoint[eventType]} points for ${args["user_name"]}`,
+        msg: `Successfully adjust: ${typeToPoint[eventType]} points for ${user.discordName}`,
         interaction,
       });
     } catch (error) {
