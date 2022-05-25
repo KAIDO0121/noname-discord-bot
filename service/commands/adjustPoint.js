@@ -10,8 +10,8 @@ module.exports = {
   options: [
     {
       type: 3,
-      name: "user_name",
-      description: "Input adjustment user name",
+      name: "user_id",
+      description: "Input adjustment user id(複製ID)",
       required: true,
     },
     {
@@ -28,7 +28,7 @@ module.exports = {
 
       const user = await User.findOne({
         serverIds: interaction.guildId,
-        discordName: args["user_name"],
+        discordId: args["user_id"],
       });
 
       if (!user) {

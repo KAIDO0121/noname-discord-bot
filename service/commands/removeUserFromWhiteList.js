@@ -3,7 +3,7 @@ const { WhiteList } = require("../schema/whiteList");
 const { error, success } = require("../utils/msgTemplate");
 
 module.exports = {
-  name: "remove_user_from_white_list",
+  name: "remove_user_from_whitelist",
   description: "Remove user from white list",
   options: [
     {

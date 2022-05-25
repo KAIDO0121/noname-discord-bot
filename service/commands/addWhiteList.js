@@ -3,7 +3,7 @@ const { WhiteList } = require("../schema/whiteList");
 const { error, success } = require("../utils/msgTemplate");
 
 module.exports = {
-  name: "add_white_list",
+  name: "add_whitelist",
   description: "Create a white list",
   options: [
     {
