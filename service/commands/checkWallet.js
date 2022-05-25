@@ -16,7 +16,7 @@ module.exports = {
         interaction,
       });
     }
-    if (!user.walletAddresses) {
+    if (!user.walletAddress) {
       return success({
         msg: `You haven't add any address yet`,
         interaction,

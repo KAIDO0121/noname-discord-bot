@@ -17,7 +17,7 @@ module.exports = {
   ],
 
   run: async (client, interaction, args) => {
-    const user = await User.findOne({
+    let user = await User.findOne({
       serverIds: interaction.guildId,
       discordId: interaction.user.id,
     });
