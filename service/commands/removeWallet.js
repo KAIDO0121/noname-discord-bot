@@ -55,12 +55,12 @@ module.exports = {
           { $pullAll: { [s]: [args["wallet_address"]] } }
         );
         // for no name only
-        // if (interaction.guildId === noNameServerId) {
-        //   await Wallet.updateOne(
-        //     { walletAddress: args["wallet_address"] },
-        //     { $set: { walletAddress: null } }
-        //   );
-        // }
+        if (interaction.guildId === noNameServerId) {
+          await Wallet.updateOne(
+            { walletAddress: args["wallet_address"] },
+            { $set: { walletAddress: null } }
+          );
+        }
       } catch (error) {
         console.log(error);
       }
