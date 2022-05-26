@@ -24,7 +24,7 @@ module.exports = {
     }
     if (!user?.walletAddress[interaction.guildId]?.length) {
       return success({
-        msg: `You haven't add any address yet`,
+        msg: `You haven't add any address yet in this server`,
         interaction,
       });
     }
