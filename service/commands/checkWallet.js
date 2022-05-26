@@ -10,6 +10,8 @@ module.exports = {
       discordId: interaction.user.id,
     });
 
+    console.log(interaction, 'interaction')
+
     if (!user) {
       return error({
         msg: `You have to register before checking the wallet addresses`,
@@ -33,6 +35,7 @@ module.exports = {
       value: `${addr}`,
       inline: true,
     }));
+
     return multiFieldsMsg({
       msgFields: address,
       interaction,

@@ -4,13 +4,23 @@ const { eventPoint, typeToPoint, noNameServerId } = require("./config");
 const mongoose = require("mongoose");
 const { botReady } = require("./event/botReady");
 const express = require("express");
+const bodyParser = require('body-parser')
+const multer  = require('multer')
+const upload = multer()
+
+
+
 const { EvalSourceMapDevToolPlugin } = require("webpack");
 const app = express();
+
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+
 app.get("/", async function (req, res) {
   res.send("root");
 });
 
-app.post("/adminLogs", async function (req, res) {
+app.post("/adminLogs", upload.array(), async (req, res) => {
   try {
     const wallet = await Wallet.aggregate([
       {
@@ -67,6 +77,10 @@ app.post("/adminLogs", async function (req, res) {
       entity["Mee6 level UP"] = 0;
       responses[el.walletAddress] = entity;
     });
+
+    if (req?.body?.address) {
+      responses = Object.fromEntries(Object.entries(responses).filter(([key]) => key.includes(req.body.address)));
+    }
 
     res.send(responses);
   } catch (error) {

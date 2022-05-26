@@ -28,10 +28,13 @@ module.exports = {
       color: "#0099ff",
       fields: msgFields,
     };
-
-    await interaction
-      .reply({ embeds: [embed], ephemeral: true })
-      .then(() => console.log("Reply sent."))
-      .catch(console.error);
+    try {
+      await interaction
+        .reply({ embeds: [embed], ephemeral: true })
+        .then(() => console.log("Reply sent."))
+        .catch(console.error);
+    } catch (e) {
+      console.log(e)
+    }
   },
 };
