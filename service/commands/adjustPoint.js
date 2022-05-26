@@ -46,14 +46,14 @@ module.exports = {
 
       await updateServerPoints({
         serverId: interaction.guildId,
-        userDiscordId: interaction.user.id,
+        userDiscordId: args["user"],
         point: args['point'],
       });
 
       await updatePointAdjustLog({
         amount: args['point'],
         serverId: interaction.guildId,
-        userDiscordId: interaction.user.id,
+        userDiscordId: args["user"],
         eventType: eventType,
       });
 
