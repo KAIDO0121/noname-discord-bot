@@ -1,4 +1,5 @@
 const { User } = require("../schema/user");
+const { Wallet } = require("../schema/wallet");
 const { updateServerPoints } = require("../crud/updateServerPoints");
 const { updatePointAdjustLog } = require("../crud/updatePointAdjustLog");
 const { eventType, eventPoint, typeToPoint } = require("../config");
