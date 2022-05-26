@@ -27,11 +27,11 @@ module.exports = {
         (l) => l !== args["white_list_name"]
       );
       await server.save();
-      WhiteList.findOneAndRemove({
+      await WhiteList.findOneAndRemove({
         name: args["white_list_name"],
         serverId: interaction.guildId,
       });
-      await newList.save();
+      
       return success({
         msg: `List :${args["white_list_name"]} removed successfully`,
         interaction,
