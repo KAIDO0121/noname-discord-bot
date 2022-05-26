@@ -25,6 +25,13 @@ module.exports = {
         discordId: args["user"],
       });
 
+      if (!user) {
+        return error({
+          msg: `This User didn't regist yet`,
+          interaction,
+        });
+      }
+
       if (!point) {
         return error({
           msg: `User : ${user.discordName} didn't have any point at this server`,
