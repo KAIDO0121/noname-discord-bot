@@ -30,7 +30,7 @@ module.exports = {
 
     if (!user) {
       return error({
-        msg: `You have to register before adding a wallet`,
+        msg: 'You have to type `/register` before adding a wallet',
         interaction,
       });
     }
