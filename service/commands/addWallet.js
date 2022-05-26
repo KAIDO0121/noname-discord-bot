@@ -23,7 +23,7 @@ module.exports = {
   ],
 
   run: async (client, interaction, args) => {
-    const user = await User.findOne({
+    let user = await User.findOne({
       serverIds: interaction.guildId,
       discordId: interaction.user.id,
     });
@@ -34,10 +34,14 @@ module.exports = {
         interaction,
       });
     }
-
-    if (!user.walletAddress) user.walletAddress = {};
-    if (!user?.walletAddress[interaction.guildId])
-      user.walletAddress[interaction.guildId] = [];
+    if (!user?.walletAddress) {
+      user = {
+        ...user,
+        walletAddress: {
+          [interaction.guildId]: [],
+        },
+      };
+    }
     if (
       user?.walletAddress[interaction.guildId]?.includes(args["wallet_address"])
     ) {
