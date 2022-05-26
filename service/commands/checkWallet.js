@@ -10,8 +10,6 @@ module.exports = {
       discordId: interaction.user.id,
     });
 
-    console.log(interaction, 'interaction')
-
     if (!user) {
       return error({
         msg: `You have to register before checking the wallet addresses`,

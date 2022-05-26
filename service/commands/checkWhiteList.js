@@ -7,8 +7,6 @@ module.exports = {
   description: "Check all added whitelist",
   run: async (client, interaction, args) => {
 
-    console.log(interaction, 'interaction')
-
     const list = await WhiteList.find({
       serverId: interaction.guildId,
     });
