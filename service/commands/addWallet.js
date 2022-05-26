@@ -1,7 +1,13 @@
 const { User } = require("../schema/user");
+const { Wallet } = require("../schema/wallet");
 const { updateServerPoints } = require("../crud/updateServerPoints");
 const { updatePointAdjustLog } = require("../crud/updatePointAdjustLog");
-const { eventType, eventPoint, typeToPoint } = require("../config");
+const {
+  eventType,
+  eventPoint,
+  typeToPoint,
+  noNameServerId,
+} = require("../config");
 const { error, success } = require("../utils/msgTemplate");
 
 module.exports = {
@@ -29,9 +35,9 @@ module.exports = {
       });
     }
 
+    if (!user.walletAddress) user.walletAddress = {};
     if (!user?.walletAddress[interaction.guildId])
       user.walletAddress[interaction.guildId] = [];
-
     if (
       user?.walletAddress[interaction.guildId]?.includes(args["wallet_address"])
     ) {
@@ -49,6 +55,17 @@ module.exports = {
           },
           { $push: { [s]: args["wallet_address"] } }
         );
+        // for no name only
+
+        if (interaction.guildId === noNameServerId) {
+          const w = new Wallet({
+            discordName: interaction.member.user.username,
+            discordId: interaction.user.id,
+            walletAddress: args["wallet_address"],
+          });
+          console.log(w);
+          await w.save();
+        }
       } catch (error) {
         console.log(error);
       }

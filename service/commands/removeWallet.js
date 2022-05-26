@@ -30,7 +30,9 @@ module.exports = {
     }
 
     if (
-      !user?.walletAddress[interaction.guildId]?.includes(args["wallet_address"])
+      !user?.walletAddress[interaction.guildId]?.includes(
+        args["wallet_address"]
+      )
     ) {
       return error({
         msg: `Address :${args["wallet_address"]} doesn't exist`,
@@ -46,6 +48,10 @@ module.exports = {
           },
           { $pullAll: { [s]: [args["wallet_address"]] } }
         );
+        // for no name only
+        if (interaction.guildId === noNameServerId) {
+          await Wallet.deleteOne({ walletAddress: args["wallet_address"] });
+        }
       } catch (error) {
         console.log(error);
       }

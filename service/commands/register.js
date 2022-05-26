@@ -19,6 +19,7 @@ module.exports = {
           twitterAccount: "",
           twitterName: "",
           serverIds: [interaction.guildId],
+          walletAddress: {},
         });
         await newUser.save();
         return success({
