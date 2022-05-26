@@ -72,24 +72,31 @@ module.exports = {
       } catch (error) {
         console.log(error);
       }
+      console.log(user.walletAddress[interaction.guildId].length)
+      if (user?.walletAddress[interaction.guildId]?.length == 0) {
+        await updateServerPoints({
+          serverId: interaction.guildId,
+          userDiscordId: interaction.user.id,
+          point: typeToPoint[eventType.add_wallet],
+        });
+  
+        await updatePointAdjustLog({
+          amount: typeToPoint[eventType.add_wallet],
+          serverId: interaction.guildId,
+          userDiscordId: interaction.user.id,
+          eventType: eventType.add_wallet,
+        });
+        success({
+          msg: `Address :${args["wallet_address"]} added successfully. You recieved : ${typeToPoint.add_wallet} points`,
+          interaction,
+        });
+      } else {
+        success({
+          msg: `Address :${args["wallet_address"]} added successfully`,
+          interaction,
+        });
+      }
 
-      await updateServerPoints({
-        serverId: interaction.guildId,
-        userDiscordId: interaction.user.id,
-        point: typeToPoint[eventType.add_wallet],
-      });
-
-      await updatePointAdjustLog({
-        amount: typeToPoint[eventType.add_wallet],
-        serverId: interaction.guildId,
-        userDiscordId: interaction.user.id,
-        eventType: eventType.add_wallet,
-      });
-
-      success({
-        msg: `Address :${args["wallet_address"]} added successfully. You recieved : ${typeToPoint.add_wallet} points`,
-        interaction,
-      });
     }
   },
 };

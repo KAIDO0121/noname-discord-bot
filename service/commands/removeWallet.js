@@ -64,24 +64,32 @@ module.exports = {
       } catch (error) {
         console.log(error);
       }
+      console.log(user)
+      if (user?.walletAddress[interaction.guildId]?.length === 1) {
+        await updateServerPoints({
+          serverId: interaction.guildId,
+          userDiscordId: interaction.user.id,
+          point: typeToPoint[eventType.remove_wallet],
+        });
+  
+        await updatePointAdjustLog({
+          amount: typeToPoint[eventType.remove_wallet],
+          serverId: interaction.guildId,
+          userDiscordId: interaction.user.id,
+          eventType: eventType.remove_wallet,
+        });
+  
+        success({
+          msg: `Address :${args["wallet_address"]} removed successfully. You lost : ${typeToPoint.add_wallet} points`,
+          interaction,
+        });
+      } else {
+        success({
+          msg: `Address :${args["wallet_address"]} removed successfully.`,
+          interaction,
+        });
+      }
 
-      await updateServerPoints({
-        serverId: interaction.guildId,
-        userDiscordId: interaction.user.id,
-        point: typeToPoint[eventType.remove_wallet],
-      });
-
-      await updatePointAdjustLog({
-        amount: typeToPoint[eventType.remove_wallet],
-        serverId: interaction.guildId,
-        userDiscordId: interaction.user.id,
-        eventType: eventType.remove_wallet,
-      });
-
-      success({
-        msg: `Address :${args["wallet_address"]} removed successfully. You lost : ${typeToPoint.add_wallet} points`,
-        interaction,
-      });
     }
   },
 };
