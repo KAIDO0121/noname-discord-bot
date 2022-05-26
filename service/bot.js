@@ -10,7 +10,7 @@ app.get("/", async function (req, res) {
   res.send("root");
 });
 
-app.get("/adminLogs", async function (req, res) {
+app.post("/adminLogs", async function (req, res) {
   try {
     const wallet = await Wallet.aggregate([
       {
