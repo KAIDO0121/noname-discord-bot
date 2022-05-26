@@ -72,8 +72,8 @@ app.post("/adminLogs", upload.array(), async (req, res) => {
       entity["Discord name"] = el.discordName;
       entity["Discord invite UP"] = el?.invites?.[0] * typeToPoint.invite;
       entity["wallet connected UP"] =
-        el?.walletLength?.length * typeToPoint.add_wallet;
-      entity["general UP"] = el?.totalPointData?.[0]?.totalPoints;
+        (el?.walletLength?.length > 0 ? 1 : 0 ) * typeToPoint.add_wallet;
+      entity["general UP"] = el?.totalPointData?.[0]?.totalPoints - (el?.walletLength?.length > 0 ? 1 : 0 ) * typeToPoint.add_wallet;
       entity["Mee6 level UP"] = 0;
       responses[el.walletAddress] = entity;
     });
