@@ -30,7 +30,7 @@ module.exports = {
 
     if (!user) {
       return error({
-        msg: 'You have to type `/register` before adding a wallet',
+        msg: "You have to type `/register` before adding a wallet",
         interaction,
       });
     }
@@ -67,7 +67,6 @@ module.exports = {
             discordId: interaction.user.id,
             walletAddress: args["wallet_address"],
           });
-          console.log(w);
           await w.save();
         }
       } catch (error) {

@@ -4,17 +4,9 @@ const { eventPoint, typeToPoint, noNameServerId } = require("./config");
 const mongoose = require("mongoose");
 const { botReady } = require("./event/botReady");
 const express = require("express");
-const bodyParser = require('body-parser')
-const multer  = require('multer')
-const upload = multer()
-
-
-
-const { EvalSourceMapDevToolPlugin } = require("webpack");
+const multer = require("multer");
+const upload = multer();
 const app = express();
-
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
 
 app.get("/", async function (req, res) {
   res.send("root");
@@ -67,19 +59,30 @@ app.post("/adminLogs", upload.array(), async (req, res) => {
       },
     ]);
     let responses = {};
+
     wallet.forEach((el) => {
       let entity = {};
       entity["Discord name"] = el.discordName;
       entity["Discord invite UP"] = el?.invites?.[0] * typeToPoint.invite;
+
       entity["wallet connected UP"] =
-        (el?.walletLength?.length > 0 ? 1 : 0 ) * typeToPoint.add_wallet;
-      entity["general UP"] = el?.totalPointData?.[0]?.totalPoints - (el?.walletLength?.length > 0 ? 1 : 0 ) * typeToPoint.add_wallet;
+        (el?.walletLength?.[0].length ?? 0) * typeToPoint.add_wallet;
+
+      entity["general UP"] =
+        el?.totalPointData?.[0]?.totalPoints -
+        (el?.walletLength?.[0].length ?? 0) * typeToPoint.add_wallet -
+        (el?.invites?.[0] ?? 0) * typeToPoint.invite;
+
       entity["Mee6 level UP"] = 0;
       responses[el.walletAddress] = entity;
     });
 
     if (req?.body?.address) {
-      responses = Object.fromEntries(Object.entries(responses).filter(([key]) => key.includes(req.body.address)));
+      responses = Object.fromEntries(
+        Object.entries(responses).filter(([key]) =>
+          key.includes(req.body.address)
+        )
+      );
     }
 
     res.send(responses);
