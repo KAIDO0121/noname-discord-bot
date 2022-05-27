@@ -67,16 +67,16 @@ app.post("/adminLogs", upload.array(), async (req, res) => {
       // console.log(el?.walletLength[0])
       if (el?.walletLength?.[0].length > 0) {
         entity["wallet connected UP"] = el?.walletLength?.[0].includes(el.walletAddress) ? 50 : 0  
-      } else {
-        entity["wallet connected UP"] = 0
-      }
-      // entity["wallet connected UP"] =
-      //   (el?.walletLength?.[0].length > 0 ? 1 : 0) * typeToPoint.add_wallet;
-
-      entity["general UP"] =
+        entity["general UP"] =
         el?.totalPointData?.[0]?.totalPoints -
         (el?.walletLength?.[0].length > 0 ? 1 : 0) * typeToPoint.add_wallet -
         (el?.invites?.[0] ?? 0) * typeToPoint.invite;
+      } else {
+        entity["wallet connected UP"] = 0
+        entity["general UP"] = 0
+      }
+      // entity["wallet connected UP"] =
+      //   (el?.walletLength?.[0].length > 0 ? 1 : 0) * typeToPoint.add_wallet;
 
       entity["Mee6 level UP"] = 0;
       responses[el.walletAddress] = entity;

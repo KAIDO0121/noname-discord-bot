@@ -64,7 +64,6 @@ module.exports = {
       } catch (error) {
         console.log(error);
       }
-      console.log(user)
       if (user?.walletAddress[interaction.guildId]?.length === 1) {
         await updateServerPoints({
           serverId: interaction.guildId,
