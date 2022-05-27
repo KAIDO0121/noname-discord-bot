@@ -20,38 +20,51 @@ module.exports = {
       //   serverIds: interaction.guildId,
       //   discordId: interaction.user.id,
       // });
-      let user = await User.findOne(
-        {
-          discordId: interaction.user.id,
-          serverIds: { $in: [interaction.guildId] } ,
-        })
+      // let user = await User.findOne(
+      //   {
+      //     discordId: interaction.user.id,
+      //     serverIds: interaction.guildId ,
+      //   })
 
-      const guildId = interaction.guildId // or a Guild object with the id property
-      const userId = interaction.user.id // or a User object with the id property
+      // const guildId = interaction.guildId // or a Guild object with the id property
+      // const userId = interaction.user.id // or a User object with the id property
 
-      const mee6UserData = await Mee6LevelsApi.getUserXp(guildId, userId)
+      // const mee6UserData = await Mee6LevelsApi.getUserXp(guildId, userId)
 
-      if (!user.mee6levels?.[interaction.guildId] || user.mee6levels?.[interaction.guildId] < mee6UserData.level) {
-        if (user.mee6levels === undefined) {
-          user.mee6levels = {}
-        };
-        user.mee6levels[interaction.guildId] = mee6UserData.level;
-        await user.save();
-        // console.log(res)
+      // if (!user.meelevels?.[interaction.guildId] || user.meelevels?.[interaction.guildId] < mee6UserData.level) {
+      //   if (user.meelevels === undefined) {
+      //     user.meelevels = {}
+      //   };
+      //   user.meelevels[interaction.guildId] = mee6UserData.level;
+      //   console.log(user.meelevels, 1111)
+      //   const res = await user.save();
+      //   console.log(res)
+      //   // const s = `mee6levels.${interaction.guildId}`
+      //   // const res = await User.updateOne(
+      //   //   {
+      //   //     discordId: interaction.user.id,
+      //   //     serverIds: { $in: [interaction.guildId] },
+      //   //   },
+      //   //   { $set: { mee6levels: {
+      //   //     [interaction.guildId]: 123,
+      //   //   } } },
+      //   //   { upsert: true, new: true }
+      //   // )
 
-        // await updateServerPoints({
-        //   serverId: interaction.guildId,
-        //   userDiscordId: interaction.user.id,
-        //   point: 50,
-        // });
+      //   // console.log(res)
+      //   // await updateServerPoints({
+      //   //   serverId: interaction.guildId,
+      //   //   userDiscordId: interaction.user.id,
+      //   //   point: 50,
+      //   // });
 
-        // await updatePointAdjustLog({
-        //   amount: args['point'],
-        //   serverId: interaction.guildId,
-        //   userDiscordId: args["user"],
-        //   eventType: eventType,
-        // });
-      }
+      //   // await updatePointAdjustLog({
+      //   //   amount: args['point'],
+      //   //   serverId: interaction.guildId,
+      //   //   userDiscordId: args["user"],
+      //   //   eventType: eventType,
+      //   // });
+      // }
 
 
 

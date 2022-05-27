@@ -72,7 +72,7 @@ module.exports = {
       } catch (error) {
         console.log(error);
       }
-      console.log(user.walletAddress[interaction.guildId].length)
+
       if (user?.walletAddress[interaction.guildId]?.length == 0) {
         await updateServerPoints({
           serverId: interaction.guildId,
