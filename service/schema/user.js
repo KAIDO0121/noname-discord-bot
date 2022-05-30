@@ -9,8 +9,8 @@ const userSchema = new mongoose.Schema({
   discordId: String,
   twitterAccount: String,
   twitterName: String,
-  mee6Points: {},
   serverIds: [],
+  mee6Level: {},
 });
 module.exports = {
   User: mongoose.model("User", userSchema),

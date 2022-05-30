@@ -1,6 +1,7 @@
 const { ServerPoint } = require("../schema/serverPoint");
 const { User } = require("../schema/user");
 const { error, success } = require("../utils/msgTemplate");
+const { check_update_point } = require("../utils/checkMee6Level")
 
 module.exports = {
   name: "check_user_point",
@@ -31,6 +32,8 @@ module.exports = {
           interaction,
         });
       }
+
+      await check_update_point(client, interaction, args["user"])
 
       if (!point) {
         return error({
