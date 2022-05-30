@@ -22,7 +22,7 @@ const typeToPoint = {
   invite: 5,
   add_wallet: 50,
   remove_wallet: -50,
-  mee6: 6,
+  mee6: 50,
 };
 const eventPoint = [
   {
