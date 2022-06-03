@@ -1,9 +1,12 @@
 require("dotenv").config()
 const fs = require('fs-extra')
 const { User } = require("../../schema/user")
+const { Wallet } = require("../../schema/wallet");
 const { updateServerPoints } = require("../../crud/updateServerPoints")
 const { updatePointAdjustLog } = require("../../crud/updatePointAdjustLog")
 const mongoose = require("mongoose")
+
+const noNameServerId = '930371558453694484'
 
 const readJsonFile = async () => {
   let mongo_db_uri = process.env.NODE_ENV == 'production' ? process.env.MONGO_DB_URI_PRD : process.env.MONGO_DB_URI_DEV
@@ -43,20 +46,20 @@ const readJsonFile = async () => {
       discordName,
       twitterAccount: '',
       twitterName: '',
-      serverIds: ['930371558453694484'],
+      serverIds: [noNameServerId],
       walletAddress: {
-        '930371558453694484': walletAddress || []
+        [noNameServerId]: walletAddress || []
       },
       mee6Level: {
-        '930371558453694484': 1,
+        [noNameServerId]: 1,
       },
       invites: {
-        '930371558453694484': invite[id] || 0,
+        [noNameServerId]: invite[id] || 0,
       },
       point: unknown_point[id],
     }
   })
-  // console.log(user_list)
+  console.log(user_list)
 
   await Promise.all(
     user_list.map(async user => {
@@ -81,42 +84,61 @@ const readJsonFile = async () => {
           await newUser.save()
           // add point log and point
           await updateServerPoints({
-            serverId: '930371558453694484',
+            serverId: noNameServerId,
             userDiscordId: user.discordId,
             point: user.point,
           })
 
           await updatePointAdjustLog({
-            serverId: '930371558453694484',
+            serverId: noNameServerId,
             amount: user.point,
             userDiscordId: user.discordId,
             eventType: 'server_transfer',
           })
         } else {
-          if (old_user?.serverIds?.includes('930371558453694484')) {
-            user.discordId = user.discordId
-            user.createdAt = user.createdAt
-            user.updatedAt = user.updatedAt
-            user.discordName = user.discordName
-            user.twitterAccount = user.twitterAccount
-            user.twitterName = user.twitterName
-            user.walletAddress = user.walletAddress
-            user.mee6Level = user.mee6Level
-            user.invites = user.invites
+          if (old_user?.serverIds?.includes(noNameServerId)) {
+            old_user.discordId = user.discordId
+            old_user.createdAt = user.createdAt
+            old_user.updatedAt = user.updatedAt
+            old_user.discordName = user.discordName
+            old_user.twitterAccount = user.twitterAccount
+            old_user.twitterName = user.twitterName
+            old_user.walletAddress = user.walletAddress
+            old_user.mee6Level = user.mee6Level
+            old_user.invites = user.invites
             await old_user.save()
           } else {
             // user didn't has serverId
-            user.discordId = user.discordId
-            user.createdAt = user.createdAt
-            user.updatedAt = user.updatedAt
-            user.discordName = user.discordName
-            user.twitterAccount = user.twitterAccount
-            user.twitterName = user.twitterName
-            user.serverIds.push('930371558453694484')
-            user.walletAddress = user.walletAddress
-            user.mee6Level = user.mee6Level
-            user.invites = user.invites
+            old_user.discordId = user.discordId
+            old_user.createdAt = user.createdAt
+            old_user.updatedAt = user.updatedAt
+            old_user.discordName = user.discordName
+            old_user.twitterAccount = user.twitterAccount
+            old_user.twitterName = user.twitterName
+            user.serverIds.push(noNameServerId)
+            old_user.walletAddress = user.walletAddress
+            old_user.mee6Level = user.mee6Level
+            old_user.invites = user.invites
             await old_user.save()
+          }
+        }
+
+        if (user.walletAddress[noNameServerId].length > 0) {
+          const old_wallet = await Wallet.findOne({
+            discordId: user.discordId,
+          })
+          if (!old_wallet) {
+            const w = new Wallet({
+              discordName: user.discordName,
+              discordId: user.discordId,
+              walletAddress: user.walletAddress[noNameServerId][0],
+            });
+            await w.save();
+          } else {
+            old_wallet.discordName = user.discordName
+            old_wallet.discordId = user.discordId
+            old_wallet.walletAddress = user.walletAddress[noNameServerId][0]
+            await old_wallet.save();
           }
         }
       } catch (e) {

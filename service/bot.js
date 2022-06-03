@@ -67,10 +67,10 @@ app.post("/adminLogs", upload.array(), async (req, res) => {
       entity["Discord name"] = el.discordName;
       entity["Discord invite UP"] = (el?.invites?.[0] ?? 0) * typeToPoint.invite;
       // console.log(el?.walletLength[0])
-      if (el?.walletLength?.[0].length > 0) {
+      if (el?.walletLength?.[0]?.length > 0) {
         entity["wallet connected UP"] = el?.walletLength?.[0].includes(el.walletAddress) ? 50 : 0  
         entity["general UP"] = el?.walletLength?.[0].includes(el.walletAddress) ? 
-          (el?.totalPointData?.[0]?.totalPoints - (el?.walletLength?.[0].length > 0 ? 1 : 0) * typeToPoint.add_wallet -
+          (el?.totalPointData?.[0]?.totalPoints - (el?.walletLength?.[0]?.length > 0 ? 1 : 0) * typeToPoint.add_wallet -
           (el?.invites?.[0] ?? 0) * typeToPoint.invite - Math.floor((el?.mee6Level?.[0] ?? 0) / 5) * typeToPoint.mee6) : 0
       } else {
         entity["wallet connected UP"] = 0

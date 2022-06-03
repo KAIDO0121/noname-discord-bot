@@ -8,7 +8,7 @@
     "start": "node ./service/bot.js",
     "prd": "NODE_ENV=production pm2 start service/bot.js",
     "dev": "NODE_ENV=development nodemon --watch 'service/**/*'",
-    "transfer": "NODE_ENV=production service/utils/data/transfer.js"
+    "transfer": "NODE_ENV=production node service/utils/data/transfer.js"
   },
   "repository": {
     "type": "git",
