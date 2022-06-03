@@ -1,6 +1,7 @@
 // const { User } = require("../schema/user")
 const { ServerPoint } = require("../schema/serverPoint")
 const { error, success } = require("../utils/msgTemplate")
+const { addOrUpdateUser } = require("../utils/addOrUpdateUser")
 // const Mee6LevelsApi = require("mee6-levels-api")
 // const { updateServerPoints } = require("../crud/updateServerPoints")
 // const { updatePointAdjustLog } = require("../crud/updatePointAdjustLog")
@@ -16,6 +17,8 @@ module.exports = {
         serverId: interaction.guildId,
         userDiscordId: interaction.user.id,
       })
+
+      await addOrUpdateUser(interaction)
 
       await check_update_point(client, interaction)
 

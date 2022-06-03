@@ -12,7 +12,8 @@ module.exports = {
         "GUILD_MESSAGES",
       ],
     });
-    client.login(process.env.DISCORD_BOT_TOKEN);
+    let token = process.env.NODE_ENV == 'production' ? process.env.DISCORD_BOT_TOKEN_PRD : process.env.DISCORD_BOT_TOKEN_DEV;
+    client.login(token);
     client.on("ready", () => {
       console.log(`${client.user.tag} has logged in.`);
       deployCommands(client);

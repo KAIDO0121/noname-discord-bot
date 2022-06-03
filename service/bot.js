@@ -99,7 +99,8 @@ app.post("/adminLogs", upload.array(), async (req, res) => {
 
 async function main() {
   try {
-    await mongoose.connect(process.env.MONGO_DB_URI);
+    let mongo_db_uri = process.env.NODE_ENV == 'production' ? process.env.MONGO_DB_URI_PRD : process.env.MONGO_DB_URI_DEV;
+    await mongoose.connect(mongo_db_uri);
   } catch (error) {
     console.error(error);
   }

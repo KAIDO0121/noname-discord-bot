@@ -14,7 +14,7 @@ module.exports = {
         const newUser = new User({
           createdAt: Date(),
           updatedAt: Date(),
-          discordName: interaction.member.user.username,
+          discordName: interaction.member.user.username + '#' + interaction.member.user.discriminator,
           discordId: interaction.user.id,
           twitterAccount: "",
           twitterName: "",

@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./service/bot.js",
-    "dev": "nodemon --watch 'service/**/*' "
+    "prd": "NODE_ENV=production pm2 start service/bot.js",
+    "dev": "NODE_ENV=development nodemon --watch 'service/**/*'",
+    "transfer": "NODE_ENV=production service/utils/data/transfer.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +28,8 @@
     "discord.js": "^13.6.0",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "fs": "^0.0.1-security",
+    "fs-extra": "^10.1.0",
     "mee6-levels-api": "^1.3.0",
     "mongodb": "^4.5.0",
     "mongoose": "^6.3.4",

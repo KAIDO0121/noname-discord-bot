@@ -13,15 +13,19 @@ module.exports = {
       .filter((file) => file.endsWith(".js"));
 
     // Place your client and guild ids here
-    const clientId = process.env.CLIENT_ID;
+    let client_id = process.env.NODE_ENV == 'production' ? process.env.CLIENT_ID_PRD : process.env.CLIENT_ID_DEV;
+    const clientId = client_id;
 
     for (const file of commandFiles) {
       const command = require(`../commands/${file}`);
       client.commands.set(command.name, command);
     }
 
+    console.log(process.env.NODE_ENV, 'NODE_ENV')
+
+    let token = process.env.NODE_ENV == 'production' ? process.env.DISCORD_BOT_TOKEN_PRD : process.env.DISCORD_BOT_TOKEN_DEV;
     const rest = new REST({ version: "9" }).setToken(
-      process.env.DISCORD_BOT_TOKEN
+      token
     );
 
     (async () => {

@@ -58,7 +58,7 @@ module.exports = {
       });
 
       return success({
-        msg: `Successfully adjust: ${args['point']} points for ${user.discordName}`,
+        msg: `Successfully adjust: ${args['point']} points for ${user.discordName}, type /check_user_point to check user's point`,
         interaction,
       });
     } catch (error) {

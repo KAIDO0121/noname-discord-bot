@@ -1,10 +1,13 @@
 const { User } = require("../schema/user");
 const { error, multiFieldsMsg, success } = require("../utils/msgTemplate");
+const { addOrUpdateUser } = require("../utils/addOrUpdateUser")
 
 module.exports = {
   name: "check_wallet",
   description: "Check all added wallet addresses",
   run: async (client, interaction, args) => {
+    await addOrUpdateUser(interaction)
+
     const user = await User.findOne({
       serverIds: interaction.guildId,
       discordId: interaction.user.id,
