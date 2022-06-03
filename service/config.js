@@ -67,7 +67,7 @@ const eventPoint = [
   },
 ];
 
-const noNameServerId = "968131609163358259";
+const noNameServerId = process.env.NODE_ENV == 'production' ? '930371558453694484' : "968131609163358259";
 
 module.exports = {
   eventType,
