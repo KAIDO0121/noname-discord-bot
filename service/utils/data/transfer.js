@@ -13,6 +13,9 @@ const readJsonFile = async () => {
   await mongoose.connect(mongo_db_uri)
   let unknown_point = await fs.readJson(__dirname + '/unknown_point.json')
   const invite = await fs.readJson(__dirname + '/invite.json')
+  Object.keys(invite).map(key => {
+    invite[key] = invite[key] * 5
+  })
   const address = await fs.readJson(__dirname + '/address.json')
   let wallet_connected = await fs.readJson(__dirname + '/wallet_connected.json')
   Object.keys(wallet_connected).map(key => {
@@ -22,7 +25,9 @@ const readJsonFile = async () => {
   unknown_point = {
     ...unknown_point,
     ...wallet_connected,
+    ...invite,
   }
+  // 需要加上 invite 跟 mee6 level 的分數
   const user_list = Object.keys(unknown_point).map(id => {
     const id_from_address_data = Object.keys(address).map(address_with_name => ({
       id: address_with_name.slice(0, 18),
@@ -54,9 +59,9 @@ const readJsonFile = async () => {
         [noNameServerId]: 1,
       },
       invites: {
-        [noNameServerId]: invite[id] || 0,
+        [noNameServerId]: invite[id] / 5 || 0,
       },
-      point: unknown_point[id],
+      point: unknown_point[id] + invite[id],
     }
   })
   console.log(user_list)
