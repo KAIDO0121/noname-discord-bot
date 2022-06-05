@@ -28,6 +28,7 @@ module.exports = {
       token
     );
 
+    // try to redeploy all commands to all server
     (async () => {
       console.log("Started refreshing application (/) commands.");
       const servers = await Server.find();
