@@ -14,7 +14,7 @@ const readJsonFile = async () => {
   let unknown_point = await fs.readJson(__dirname + '/unknown_point.json')
   const invite = await fs.readJson(__dirname + '/invite.json')
   Object.keys(invite).map(key => {
-    invite[key] = invite[key] * 5
+    invite[key] = Number(invite[key]) * 5
   })
   const address = await fs.readJson(__dirname + '/address.json')
   let wallet_connected = await fs.readJson(__dirname + '/wallet_connected.json')
@@ -25,7 +25,7 @@ const readJsonFile = async () => {
   unknown_point = {
     ...unknown_point,
     ...wallet_connected,
-    ...invite,
+    // ...invite,
   }
   // 需要加上 invite 跟 mee6 level 的分數
   const user_list = Object.keys(unknown_point).map(id => {
@@ -61,10 +61,10 @@ const readJsonFile = async () => {
       invites: {
         [noNameServerId]: invite[id] / 5 || 0,
       },
-      point: unknown_point[id] + invite[id],
+      point: Number(unknown_point[id]) + (invite[id] ? Number(invite[id]) : 0) + (wallet_connected[id] ? Number(wallet_connected[id]) : 0),
+      invite_point: invite[id] || 0,
     }
   })
-  console.log(user_list)
 
   await Promise.all(
     user_list.map(async user => {
@@ -88,15 +88,18 @@ const readJsonFile = async () => {
           })
           await newUser.save()
           // add point log and point
+          if (user.discordId == '961144568445816872') {
+            console.log(Number(user.point), Number(user.invite_point))
+          }
           await updateServerPoints({
             serverId: noNameServerId,
             userDiscordId: user.discordId,
-            point: user.point,
+            point: Number(user.point) + Number(user.invite_point),
           })
 
           await updatePointAdjustLog({
             serverId: noNameServerId,
-            amount: user.point,
+            amount: Number(user.point) + Number(user.invite_point),
             userDiscordId: user.discordId,
             eventType: 'server_transfer',
           })
@@ -125,6 +128,20 @@ const readJsonFile = async () => {
             old_user.mee6Level = user.mee6Level
             old_user.invites = user.invites
             await old_user.save()
+          }
+          if (Number(old_user.invite_point) > 0) {
+            await updateServerPoints({
+              serverId: noNameServerId,
+              userDiscordId: user.discordId,
+              point: Number(old_user.invite_point),
+            })
+  
+            await updatePointAdjustLog({
+              serverId: noNameServerId,
+              amount: Number(user.invite_point),
+              userDiscordId: user.discordId,
+              eventType: 'invite_update',
+            })
           }
         }
 
