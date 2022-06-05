@@ -21,14 +21,16 @@ module.exports = {
       message.interaction.commandName === "invites" &&
       message.interaction.user.id === user.discordId
     ) {
-      const invites = +message.embeds[0].description
+      let str = message.embeds[0].description
         .split(" ")
         .find((str) => str.startsWith("**"))
         .replace(/\D/g, "");
+      const invites = Number(str)
 
       if (user.invites === undefined) user.invites = {};
       const userInvites = user.invites[message.guildId] ?? 0;
       const newInvites = invites - userInvites;
+
 
       if (newInvites <= 0) return;
 
@@ -45,10 +47,15 @@ module.exports = {
         eventType: eventType.invite,
       });
 
-      user.invites[message.guildId] = newInvites;
-
       try {
-        await user.save();
+        const q = `invites.${[message.guildId]}`
+
+        const res = await User.updateOne({
+          serverIds: message.guildId,
+          discordId: message.interaction.user.id
+        }, { "$set": { [q]: invites } })
+        // bracket notation for dynamic key in object 
+
         success({
           msg: `You recieved :${typeToPoint.invite * newInvites} points`,
           interaction: message,
