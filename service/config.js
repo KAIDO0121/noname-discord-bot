@@ -73,7 +73,7 @@ module.exports = {
   eventType,
   typeToPoint,
   eventPoint,
-  noNameServerId,
+  noNameServerId
 };
 
 // 自我介紹, 二創, ⽐賽活動, 群內活躍, 疑難雜症解答, 提供建議, 邀請人數, 綁定錢包, Mee6 等級

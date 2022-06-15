@@ -3,11 +3,23 @@ const Discord = require("discord.js");
 const { Routes } = require("discord-api-types/v9");
 const { Server } = require("../schema/server");
 const { deployEvents } = require("../utils/deployEvents");
+const { noNameServerId } = require("../config")
 const fs = require("node:fs");
+/* import moralis */
+const Moralis = require("moralis/node");
 
 module.exports = {
-  deployCommands: (client) => {
+  deployCommands: async (client) => {
     client.commands = new Discord.Collection();
+
+    try {
+      const res = await Moralis.start({ serverUrl: process.env.MORALIS_SERVERURL, appId: process.env.MORALIS_APPID, masterKey: process.env.MORALIS_KEY });
+
+    } catch (error) {
+      console.log(error)
+    }
+
+
     const commandFiles = fs
       .readdirSync("./service/commands")
       .filter((file) => file.endsWith(".js"));
@@ -20,6 +32,10 @@ module.exports = {
       const command = require(`../commands/${file}`);
       client.commands.set(command.name, command);
     }
+
+    const normalCMDSets = JSON.parse(JSON.stringify(client.commands))
+
+    delete normalCMDSets.nftToRoles
 
     console.log(process.env.NODE_ENV, 'NODE_ENV')
 
@@ -37,7 +53,7 @@ module.exports = {
           const res = await rest.put(
             Routes.applicationGuildCommands(clientId, guild.serverId),
             {
-              body: client.commands,
+              body: guild.serverId === noNameServerId ? client.commands : normalCMDSets
             }
           );
         } catch (error) {
