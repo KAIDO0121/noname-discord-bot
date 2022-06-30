@@ -139,7 +139,7 @@ module.exports = {
     const products_list_text = products.map(product => `${product.name} ` + '商品id: ' + '`' + product.id + '`' + '\n').join('\n')
     const embed = new MessageEmbed()
       .setColor("#0099ff")
-      .setTitle(`${bag_name} - Page 1/2`)
+      .setTitle(`${bag_name}`)
       .setDescription(
         "**" + user_name + "**" + bag_hint + '\n\n' +
         products_list_text

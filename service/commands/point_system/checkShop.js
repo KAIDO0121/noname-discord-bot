@@ -83,7 +83,7 @@ module.exports = {
       isOnShop: true,
     })
 
-    if (!products) {
+    if (!products || products.length == 0) {
       return error({
         msg: `目前對方無商品販售`,
         interaction,

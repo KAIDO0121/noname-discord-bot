@@ -15,7 +15,7 @@ module.exports = {
         isOnShop: false,
         serverId: interaction.guildId,
       })
-      if (!products) {
+      if (!products || products.length == 0) {
         return error({
           msg: `目前背包尚無商品`,
           interaction,

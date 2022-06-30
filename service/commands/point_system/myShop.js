@@ -17,9 +17,10 @@ module.exports = {
         isOnShop: true,
         serverId: interaction.guildId,
       })
-      if (!products) {
+
+      if (!products || products.length == 0) {
         return error({
-          msg: `目前商店尚無商品`,
+          msg: '目前商店尚無商品',
           interaction,
         })
       } else {
