@@ -7,6 +7,7 @@ const serverSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now },
   levels: {},
   whiteLists: [],
+  shopId: String,
 });
 
 module.exports = {

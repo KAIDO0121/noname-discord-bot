@@ -94,12 +94,12 @@ const readJsonFile = async () => {
           await updateServerPoints({
             serverId: noNameServerId,
             userDiscordId: user.discordId,
-            point: Number(user.point) + Number(user.invite_point),
+            point: Number(user.point),
           })
 
           await updatePointAdjustLog({
             serverId: noNameServerId,
-            amount: Number(user.point) + Number(user.invite_point),
+            amount: Number(user.point),
             userDiscordId: user.discordId,
             eventType: 'server_transfer',
           })
