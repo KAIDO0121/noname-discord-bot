@@ -29,7 +29,7 @@ module.exports = {
         })
       }
       return success({
-        msg: `You have ${point.totalPoints} points at this server`,
+        msg: `You have ${point?.totalPoints  ||  0} points at this server`,
         interaction,
       })
     } catch (error) {

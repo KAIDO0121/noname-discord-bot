@@ -56,7 +56,7 @@ module.exports = {
         userDiscordId: interaction.user.id,
       })
 
-      if (args['amount'] * officialProduct.price > point.totalPoints) {
+      if (args['amount'] * officialProduct.price > point?.totalPoints) {
         return error({
           msg: `進貨總金額大於我的餘額`,
           interaction,

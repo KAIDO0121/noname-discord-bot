@@ -42,7 +42,7 @@ module.exports = {
         });
       }
       return success({
-        msg: `User : ${user.discordName} have ${point.totalPoints} points at this server`,
+        msg: `User : ${user.discordName} have ${point?.totalPoints || 0} points at this server`,
         interaction,
       });
     } catch (error) {
