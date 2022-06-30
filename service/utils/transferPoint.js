@@ -10,7 +10,6 @@ module.exports = {
     const serverId = datas[1]
     const userId = datas[2]
     const amount = datas[3]
-    console.log(interaction.channel, 'interaction.channel')
 
     // 1 扣掉自己的金額
     // 2. 增加對方的金額

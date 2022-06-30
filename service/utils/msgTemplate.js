@@ -95,7 +95,7 @@ module.exports = {
         ephemeral: true
       }).then(() => console.log("Reply sent."))
       .catch(console.error)
-      const reply = await interaction.fetchReply();
+    const reply = await interaction.fetchReply()
 
     collector = await reply.createMessageComponentCollector({ filter, time })
 

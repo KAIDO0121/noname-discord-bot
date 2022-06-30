@@ -62,7 +62,7 @@ module.exports = {
       }
 
       // 欲轉帳的用戶非自己
-      const user =  await User.findOne({
+      const user = await User.findOne({
         discordId: interaction.user.id,
       })
       // if (interaction.user.id === args['user_to_transfer']) {
@@ -89,7 +89,21 @@ module.exports = {
             interaction,
           })
         }
-      }).then(() => {
+      }).then((res) => {
+        setTimeout(() => {
+          const disable_row = new MessageActionRow()
+            .addComponents(
+              new MessageButton()
+                .setCustomId(`transPoint_${interaction.guildId}_${interaction.user.id}_${args['amount']}`)
+                .setLabel('Confirm')
+                .setStyle('SUCCESS')
+                .setDisabled(true)
+            )
+          res.edit({
+            content: '已超過轉帳同意時限5分鐘',
+            components: [disable_row],
+          })
+        }, 1000 * 60 * 5)
         return success({
           msg: `已私訊對方轉帳請求，等待對方點擊確認中`,
           interaction,
