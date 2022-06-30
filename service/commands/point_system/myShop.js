@@ -35,7 +35,7 @@ module.exports = {
           is_official: false,
           user_name: interaction.user.username,
           productChunk: [
-            ..._.chunk(message_products, 1)
+            ..._.chunk(message_products, 5)
           ],
           interaction,
         })

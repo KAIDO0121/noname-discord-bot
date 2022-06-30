@@ -55,7 +55,7 @@ module.exports = {
           is_official: true,
           user_name: interaction.user.username,
           productChunk: [
-            ..._.chunk(message_products, 1)
+            ..._.chunk(message_products, 5)
           ],
           interaction,
         })
@@ -102,7 +102,7 @@ module.exports = {
         user_name: user.discordName,
         hint: `你可以使用 /buy [商品 id] 來購買商品\n\n`,
         productChunk: [
-          ..._.chunk(message_products, 1)
+          ..._.chunk(message_products, 5)
         ],
         interaction,
       })
