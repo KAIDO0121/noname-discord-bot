@@ -83,6 +83,7 @@ module.exports = {
       const messageContent = `Hi! ${user.discordName} 想轉帳 ${args['amount']} 金額給您，請點擊下方按鈕確認`
 
       sender.send({ content: messageContent, components: [row] }).catch(e => {
+        console.log(e)
         if (e.code === 50007) {
           return error({
             msg: `無法私訊轉帳請求給對方，請確認以下事項\n1. 對方跟你在同一個伺服器\n2.對方有開啟DM功能(允許來自伺服器成員的私人訊息)\n3.對方沒有封鎖機器人`,
