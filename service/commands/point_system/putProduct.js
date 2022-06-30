@@ -26,7 +26,7 @@ module.exports = {
       
       if (!ObjectId.isValid(args['item'])) {
         return error({
-          msg: `商品id錯誤`,
+          msg: `商品id錯誤，上架失敗`,
           interaction,
         })
       }
@@ -38,7 +38,7 @@ module.exports = {
       })
       if (!product) {
         return error({
-          msg: `查無商品`,
+          msg: `背包無此商品，上架失敗，請注意商品id`,
           interaction,
         })
       }
