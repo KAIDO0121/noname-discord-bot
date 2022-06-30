@@ -84,21 +84,19 @@ module.exports = {
 
       sender.send({ content: messageContent, components: [row] }).catch(e => {
         console.log(e)
-        if (e.code === 50007 || e.code === 40060) {
-          return error({
-            msg: `無法私訊轉帳請求給對方，請確認以下事項\n1. 對方跟你在同一個伺服器\n2.對方有開啟DM功能(允許來自伺服器成員的私人訊息)\n3.對方沒有封鎖機器人`,
-            interaction,
-          })
-        }
-      })
-
-      
-      return success({
-        msg: `已私訊對方轉帳請求，等待對方點擊確認中`,
-        interaction,
+      }).then(() => {
+        return success({
+          msg: `已私訊對方轉帳請求，等待對方點擊確認中`,
+          interaction,
+        })
       })
     } catch (error) {
-      console.log(error)
+      if (e.code === 50007 || e.code === 40060) {
+        return error({
+          msg: `無法私訊轉帳請求給對方，請確認以下事項\n1. 對方跟你在同一個伺服器\n2.對方有開啟DM功能(允許來自伺服器成員的私人訊息)\n3.對方沒有封鎖機器人`,
+          interaction,
+        })
+      }
     }
   },
 }
