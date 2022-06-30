@@ -42,6 +42,9 @@ module.exports = {
     if (interaction.isButton()) {
       if (interaction.customId.includes('transPoint')) {
         transferPoint(interaction)
+        setTimeout(async () => {
+          await interaction.message.delete();
+        }, 1000 * 10)
       }
 
       // if (interaction.customId == 'prev_shop') {
