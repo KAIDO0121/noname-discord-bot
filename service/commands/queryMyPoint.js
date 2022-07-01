@@ -5,7 +5,7 @@ const { addOrUpdateUser } = require("../utils/addOrUpdateUser")
 // const Mee6LevelsApi = require("mee6-levels-api")
 // const { updateServerPoints } = require("../crud/updateServerPoints")
 // const { updatePointAdjustLog } = require("../crud/updatePointAdjustLog")
-const { check_update_point } = require("../utils/checkMee6Level")
+// const { check_update_point } = require("../utils/checkMee6Level")
 
 
 module.exports = {
@@ -20,7 +20,7 @@ module.exports = {
 
       await addOrUpdateUser(interaction)
 
-      await check_update_point(client, interaction)
+      // await check_update_point(client, interaction)
 
       if (!point) {
         return error({
