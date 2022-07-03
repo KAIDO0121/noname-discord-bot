@@ -1,6 +1,7 @@
 require("dotenv").config();
 const { Wallet } = require("./schema/wallet");
 const { eventPoint, typeToPoint, noNameServerId } = require("./config");
+const { resetCredit } = require("./utils/gasFeeAPICounter")
 const mongoose = require("mongoose");
 const { botReady } = require("./event/botReady");
 const express = require("express");
@@ -93,6 +94,9 @@ app.post("/adminLogs", upload.array(), async (req, res) => {
 });
 
 async function main() {
+  setInterval(() => {
+    resetCredit()
+  }, 3600000);
   try {
     let mongo_db_uri = process.env.NODE_ENV == 'production' ? process.env.MONGO_DB_URI_PRD : process.env.MONGO_DB_URI_DEV;
     await mongoose.connect(mongo_db_uri);
