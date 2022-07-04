@@ -22,6 +22,7 @@ module.exports = {
       type: 6,
       name: "user",
       description: "選擇贈予者",
+      required: true,
     },
     {
       type: 3,
@@ -60,7 +61,7 @@ module.exports = {
       });
 
       // 判斷贈予的使用者跟自己不一樣
-      if (product.userId === interaction.user.id) {
+      if (product.userId === args['user']) {
         return error({
           msg: `請指定正確的贈予者`,
           interaction,
