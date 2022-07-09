@@ -13,6 +13,14 @@ const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js")
 module.exports = {
   name: "set_pick_role",
   description: "MOD 設置陣營",
+  options: [
+    {
+      type: 3,
+      name: "channel",
+      description: "想要發送此訊息至哪一個頻道",
+      required: true,
+    },
+  ],
   run: async (client, interaction) => {
     try {
       const getRow = () => {
@@ -45,7 +53,7 @@ module.exports = {
       Please select the faction then fight for tribe.
       
       (哥布林 **Goblins**) (半獸人 **Orcs**)`)
-      await client.channels.cache.get('969846903611215912').send({ embeds: [embed],components: [getRow()], })
+      await client.channels.cache.get(args['channel']).send({ embeds: [embed],components: [getRow()], })
     await interaction
       .reply('設置成功')
       .then(() => console.log("Reply sent."))
