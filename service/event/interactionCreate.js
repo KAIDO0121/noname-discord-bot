@@ -1,4 +1,5 @@
 const { transferPoint } = require('../utils/transferPoint.js')
+const { setGroup } = require('../utils/setGroup.js')
 module.exports = {
   name: "interactionCreate",
   run: async (client, interaction) => {
@@ -44,13 +45,9 @@ module.exports = {
         transferPoint(interaction)
       }
 
-      // if (interaction.customId == 'prev_shop') {
-      //   interaction.update({ephemeral: true})
-      // }
-
-      // if (interaction.customId == 'next_shop') {
-      //   interaction.update({ephemeral: true})
-      // }
+      if (interaction.customId == 'goblins' || interaction.customId == 'orcs') {
+        setGroup(client, interaction)
+      }
     }
   },
 }
