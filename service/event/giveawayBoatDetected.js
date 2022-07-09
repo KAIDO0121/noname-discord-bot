@@ -15,8 +15,8 @@ module.exports = {
 
     let msg = message.embeds[0].description
     console.log(message.embeds[0].description, 'message.embeds[0].description')
-    let won_list = msg.split('won the giveaway of')[0]?.replace("<@", "")?.replace(">", "")?.replace(" ", "")?.split(",")
-    let reward = msg.split('won the giveaway of')[1]?.split(']')[0]?.replace("[", "")?.split("：")[1]
+    let won_list = msg.split('won the giveaway of')[0]?.replaceAll("<@", "")?.replaceAll(">", "")?.replaceAll(" ", "")?.split(",")
+    let reward = msg.split('won the giveaway of')[1]?.split(']')[0]?.replaceAll("[", "")?.split("：")[1]
     console.log(won_list, 'won_list')
     console.log(reward, 'reward')
 
