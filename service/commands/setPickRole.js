@@ -21,7 +21,7 @@ module.exports = {
       required: true,
     },
   ],
-  run: async (client, interaction) => {
+  run: async (client, interaction, args) => {
     try {
       const getRow = () => {
         const row = new MessageActionRow()
