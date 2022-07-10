@@ -3,9 +3,6 @@ const { creditMinus1, getCurrentCredit } = require("../utils/gasFeeAPICounter")
 require("dotenv").config()
 const axios = require('axios');
 
-// each time this function invoked, credit -= 1
-// timer start
-// 
 module.exports = {
   name: "check_gas_fee",
   description: "Check current gas fee of ethereum",
@@ -28,7 +25,7 @@ module.exports = {
         inline: true,
       }));
 
-      gasFees.push({
+      gasFees.unshift({
         name: 'slow',
         value: `Base : ${res.data.baseFee} GWei \n Tip: 0 GWei`,
         inline: true,
@@ -40,7 +37,6 @@ module.exports = {
     } catch (error) {
       console.log(error)
     }
-
 
   },
 };

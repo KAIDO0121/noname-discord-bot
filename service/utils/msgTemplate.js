@@ -37,6 +37,20 @@ module.exports = {
       console.log(e)
     }
   },
+  multiFieldsMsgToChannel: async ({ channel, msgFields }) => {
+    const embed = {
+      color: "#0099ff",
+      fields: msgFields,
+    }
+    try {
+      await channel
+        .send({ embeds: [embed] })
+        .then(() => console.log("Reply sent."))
+        .catch(console.error)
+    } catch (e) {
+      console.log(e)
+    }
+  },
 
   shopMsg: async ({ interaction, is_official = false, user_name, productChunk, hint }) => {
     const shop_name = is_official ? '官方商店' : `${user_name}的商店`

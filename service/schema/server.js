@@ -8,6 +8,7 @@ const serverSchema = new mongoose.Schema({
   levels: {},
   whiteLists: [],
   shopId: String,
+  monitorChannelId: []
 });
 
 module.exports = {
