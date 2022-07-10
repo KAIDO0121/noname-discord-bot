@@ -16,6 +16,7 @@ const eventType = {
   sell_product: "sell_product", // 賣出商品
   receive_point: "receive_point", // 收款
   transfer_point: "transfer_point", // 轉帳
+  giveaway: "giveaway", // 抽獎
 };
 const typeToPoint = {
   self_introduce: 10,
