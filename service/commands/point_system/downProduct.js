@@ -32,7 +32,7 @@ module.exports = {
       })
       if (!product) {
         return error({
-          msg: `查無商品`,
+          msg: `查無商品或此商品並非您擁有`,
           interaction,
         })
       }
@@ -40,6 +40,7 @@ module.exports = {
       // 變更商品上架狀態，價格
       product.price = 0
       product.isOnShop = false
+      product.isOnMarket = false
       await product.save()
 
       return success({

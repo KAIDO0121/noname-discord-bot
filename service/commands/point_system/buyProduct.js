@@ -113,6 +113,7 @@ module.exports = {
 
       product.price = 0
       product.isOnShop = false
+      product.isOnMarket = false
       product.userId = interaction.user.id
       await product.save()
 

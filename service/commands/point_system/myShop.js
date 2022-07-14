@@ -15,6 +15,7 @@ module.exports = {
       const products = await Product.find({
         userId: interaction.user.id,
         isOnShop: true,
+        isOnMarket: [false, null],
         serverId: interaction.guildId,
       })
 
@@ -32,7 +33,7 @@ module.exports = {
           id: item._id
         }))
         return shopMsg({
-          is_official: false,
+          is_official: 1, // 0 官方, 1 使用者, 2 拍賣所
           user_name: interaction.user.username,
           productChunk: [
             ..._.chunk(message_products, 5)

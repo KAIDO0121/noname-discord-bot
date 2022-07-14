@@ -76,6 +76,7 @@ module.exports = {
 
       product.price = 0
       product.isOnShop = false
+      product.isOnMarket = false
       product.userId = args['user']
       await product.save()
 

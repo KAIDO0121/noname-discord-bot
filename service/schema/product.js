@@ -9,6 +9,10 @@ const productSchema = new mongoose.Schema({
   serverId: String,
   userId: String,
   isOnShop: Boolean,
+  isOnMarket: Boolean,
+  // isOnShop, isOnMarket 同時為 true, 代表在交易所
+  // isOnShop: true, isOnMarket: false, 代表在個人商店
+  // isOnshop: false, isOnMarket: false, 代表在背包
 });
 module.exports = {
   Product: mongoose.model("Product", productSchema),

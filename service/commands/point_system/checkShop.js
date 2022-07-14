@@ -52,7 +52,7 @@ module.exports = {
 
 
         return shopMsg({
-          is_official: true,
+          is_official: 0, // 0 官方, 1 使用者, 2 拍賣所
           user_name: interaction.user.username,
           productChunk: [
             ..._.chunk(message_products, 5)
@@ -81,6 +81,7 @@ module.exports = {
       serverId: interaction.guildId,
       userId: user.discordId,
       isOnShop: true,
+      isOnMarket: [false, null],
     })
 
     if (!products || products.length == 0) {
@@ -98,7 +99,7 @@ module.exports = {
       }))
 
       return shopMsg({
-        is_official: false,
+        is_official: 1, // 0 官方, 1 使用者, 2 拍賣所
         user_name: user.discordName,
         hint: `你可以使用 /buy [商品 id] 來購買商品\n\n`,
         productChunk: [

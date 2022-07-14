@@ -1,4 +1,18 @@
-const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js")
+const { MessageEmbed, MessageActionRow, MessageButton, MessageSelectMenu } = require("discord.js")
+
+const number_emoji_list = [
+  'zero',
+  'one',
+  'two',
+  'three',
+  'four',
+  'five',
+  'six',
+  'seven',
+  'eight',
+  'nine',
+  'ten',
+]
 
 module.exports = {
   error: async ({ msg, title = "Error", interaction }) => {
@@ -53,7 +67,16 @@ module.exports = {
   },
 
   shopMsg: async ({ interaction, is_official = false, user_name, productChunk, hint }) => {
-    const shop_name = is_official ? '官方商店' : `${user_name}的商店`
+    let shop_name
+    if (is_official == 0) {
+      shop_name = '官方商店'
+    } else if (is_official == 1) {
+      shop_name = `${user_name}的商店`
+    } else if (is_official == 2) {
+      shop_name = '拍賣所'
+    } else {
+      shop_name = '官方商店'
+    }
     let shop_hint
     if (hint) {
       shop_hint = hint
@@ -63,13 +86,24 @@ module.exports = {
 
     const embeds = []
     productChunk.forEach((products, index) => {
-      const products_list_text = products.map(product => `${product.name} | 價格：${product.price} :coin: | 目前數量：${product.amount}
-    ` + '商品id: ' + '`' + product.id + '`' + '\n').join('\n')
+      // 序數 圖標 商品名稱
+      // 錢幣 金額 
+      const products_list_text = products.map((product, index) =>
+        `:${number_emoji_list[index + 1]}: ` + // 序數
+        ':small_blue_diamond: ' + // 圖標
+        `**${product.name}**` + // 商品名稱
+        '\n' +
+        ':coin:  ' +
+        '`' + `${product.price}` + '` ' +
+        `目前數量: ${product.amount}個` +
+        '\n' +
+        '商品id:' + '`' + `${product.id}` + '`' +
+        '\n').join('\n')
       embeds.push(new MessageEmbed()
         .setColor("#0099ff")
         .setTitle(`${shop_name} - Page ${index + 1}/${productChunk.length}`)
         .setDescription(
-          "**" + user_name + "**" + shop_hint +
+          user_name + " " + shop_hint +
           products_list_text
         ))
     })
@@ -98,6 +132,27 @@ module.exports = {
 
       return row
     }
+
+    // const getMenu = (id) => {
+    //   const row = new MessageActionRow()
+    //   row.addComponents(
+		// 		new MessageSelectMenu()
+		// 			.setCustomId('select')
+		// 			.setPlaceholder('Nothing selected')
+		// 			.addOptions([
+		// 				{
+		// 					label: 'Select me',
+		// 					description: 'This is a description',
+		// 					value: 'first_option',
+		// 				},
+		// 				{
+		// 					label: 'You can select me too',
+		// 					description: 'This is also a description',
+		// 					value: 'second_option',
+		// 				},
+		// 			]),
+		// 	)
+    // }
     let collector
     const filter = (i) => i.user.id === interaction.user.id
     const time = 1000 * 60 * 5

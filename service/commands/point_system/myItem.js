@@ -13,6 +13,7 @@ module.exports = {
       const products = await Product.find({
         userId: interaction.user.id,
         isOnShop: false,
+        isOnMarket: [false, null],
         serverId: interaction.guildId,
       })
       if (!products || products.length == 0) {

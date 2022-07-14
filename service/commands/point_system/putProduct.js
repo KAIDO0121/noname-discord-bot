@@ -19,6 +19,12 @@ module.exports = {
       description: "輸入商品金額",
       required: true,
     },
+    {
+      type: 5,
+      name: "is_own_shop",
+      description: "True: 上架到自己的商店; False: 上架到拍賣所",
+      required: true,
+    },
   ],
   run: async (client, interaction, args) => {
     try {
@@ -35,6 +41,7 @@ module.exports = {
         _id: args['item'],
         userId: interaction.user.id,
         isOnShop: false,
+        isOnMarket: [false, null],
       })
       if (!product) {
         return error({
@@ -42,10 +49,17 @@ module.exports = {
           interaction,
         })
       }
-
-      // 變更商品上架狀態，價格
       product.price = args['price']
-      product.isOnShop = true
+      
+      if (args['is_own_shop']) {
+        // 變更商品上架狀態，價格
+        product.isOnShop = true
+        product.isOnMarket = false
+      } else {
+        product.isOnShop = true
+        product.isOnMarket = true
+      }
+
       await product.save()
 
       return success({

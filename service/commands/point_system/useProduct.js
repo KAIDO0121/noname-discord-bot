@@ -1,4 +1,4 @@
-// const { User } = require("../schema/user");
+const { User } = require("../../schema/user");
 const { error, success } = require("../../utils/msgTemplate")
 const { Product } = require("../../schema/product")
 const { addOrUpdateUser } = require("../../utils/addOrUpdateUser")
@@ -30,6 +30,7 @@ module.exports = {
         _id: args['item'],
         userId: interaction.user.id,
         isOnShop: false,
+        isOnMarket: [false, null],
       })
       
       // 判斷是否持有此商品
@@ -41,9 +42,17 @@ module.exports = {
         })
       }
 
-      // 使用，獲取身分組
-      const role = interaction.member.guild.roles.cache.find(role => role.name === product.name)
-      interaction.member.roles.add(role)
+      // 判断是否已经有这个身分组
+      const role = interaction.member.guild.roles.cache.find(role => role.id === product.roleId)
+      if (interaction.member.roles.cache.find(role => role.id == product.roleId)) {
+        return success({
+          msg: `您已經使用過此商品：${product.name}，不需重複使用`,
+          interaction,
+        })
+      } else {
+        // 使用，獲取身分組
+        interaction.member.roles.add(role)  
+      }
 
       // 移除商品
       await product.remove()

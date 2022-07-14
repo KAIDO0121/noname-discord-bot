@@ -101,6 +101,7 @@ module.exports = {
             serverId: interaction.guildId,
             userId: interaction.user.id,
             isOnShop: false,
+            isOnMarket: false,
           })
           await product.save()
         } catch (error) {
