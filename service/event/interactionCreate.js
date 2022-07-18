@@ -37,8 +37,11 @@ module.exports = {
       }
     }
     // if (interaction.isSelectMenu()) {
-    //   const command = client.commands.get(interaction.values[0].split("=")[0]);
-    //   if (command) command.run(client, interaction);
+    //   if (interaction.customId == 'select_product') {
+    //     console.log(interaction.values, 'interaction.values') 
+    //   }
+    //   // const command = client.commands.get(interaction.values[0].split("=")[0]);
+    //   // if (command) command.run(client, interaction);
     // }
     if (interaction.isButton()) {
       if (interaction.customId.includes('transPoint')) {

@@ -1,26 +1,16 @@
-const { User } = require("../../schema/user");
-const { error, success } = require("../../utils/msgTemplate")
-const { Product } = require("../../schema/product")
-const { ServerPoint } = require("../../schema/serverPoint")
-const { updateServerPoints } = require("../../crud/updateServerPoints")
-const { updatePointAdjustLog } = require("../../crud/updatePointAdjustLog")
-const { eventType } = require("../../config")
+const { User } = require("../schema/user");
+const { success, error } = require("./msgTemplate")
+const { Product } = require("../schema/product")
+const { ServerPoint } = require("../schema/serverPoint")
+const { updateServerPoints } = require("../crud/updateServerPoints")
+const { updatePointAdjustLog } = require("../crud/updatePointAdjustLog")
+const { eventType } = require("../config")
 const _ = require('lodash')
-const { addOrUpdateUser } = require("../../utils/addOrUpdateUser")
+const { addOrUpdateUser } = require("./addOrUpdateUser")
 const ObjectId = require('mongoose').Types.ObjectId;
 
 module.exports = {
-  name: "buy",
-  description: "從別人的商店購買商品",
-  options: [
-    {
-      type: 3,
-      name: "item",
-      description: "輸入商品id",
-      required: true,
-    },
-  ],
-  run: async (client, interaction, args) => {
+  buyProduct: async (client, interaction, args) => {
     try {
       await addOrUpdateUser(interaction)
 

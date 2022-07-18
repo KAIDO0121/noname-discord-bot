@@ -1,7 +1,6 @@
 const { Product } = require("../../schema/product")
 const { error, shopMsg } = require("../../utils/msgTemplate")
 const { addOrUpdateUser } = require("../../utils/addOrUpdateUser")
-const { Collector } = require('discord.js')
 const _ = require('lodash')
 
 module.exports = {

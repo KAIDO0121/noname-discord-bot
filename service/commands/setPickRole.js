@@ -53,6 +53,7 @@ module.exports = {
       Please select the faction then fight for tribe.
       
       (哥布林 **Goblins**) (半獸人 **Orcs**)`)
+      .setImage('https://i.imgur.com/aO6YGBQ.png')
       await client.channels.cache.get(args['channel']).send({ embeds: [embed],components: [getRow()], })
     await interaction
       .reply('設置成功')

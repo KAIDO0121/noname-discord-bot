@@ -7,6 +7,7 @@ const { error, shopMsg } = require("../../utils/msgTemplate")
 const { addOrUpdateUser } = require("../../utils/addOrUpdateUser")
 const _ = require('lodash')
 
+const pageSize = 5
 module.exports = {
   name: "check_market",
   description: "呼叫拍賣所",
@@ -38,7 +39,7 @@ module.exports = {
         user_name: '',
         hint: '你可以使用 /buy [商品 id] 來購買商品\n\n',
         productChunk: [
-          ..._.chunk(message_products, 5)
+          ..._.chunk(message_products, pageSize)
         ],
         interaction,
       })
