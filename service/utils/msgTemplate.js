@@ -13,7 +13,7 @@ const { addOrUpdateUser } = require("../utils/addOrUpdateUser")
 const ObjectId = require('mongoose').Types.ObjectId
 
 const role_emoji_mapping = {
-  "992272596064292884": ":Astronaut2099:", // 2D化日式風格NFT
+  "992272596064292884": "<:Astronaut2099:986669796735201360>", // 2D化日式風格NFT
   "992274050720202845": "💇‍♀️", // 未來美髮造型卷
   "996510630557274152": "🤦‍♀️", // 未來醫美整容卷
   "992275729456844891": "🎟️", // 超級抽獎卷
@@ -106,7 +106,7 @@ module.exports = {
       shop_hint = (is_official != 1 || is_official != 2) ? '你可以使用 `/income_product [商品id] [數量]` 來進貨商品 \n\n' : '你可以使用 `/put_product [商品id]` 上架商品到自己的商店 \n\n'
     }
 
-    let ur_balance = `**您的餘額：** :coin_1:${point.totalPoints}\n\n`
+    let ur_balance = `**您的餘額：** <:coin_1:999163493561409626>${point.totalPoints}\n\n`
 
     const embeds = []
     productChunk.forEach((products, index) => {
