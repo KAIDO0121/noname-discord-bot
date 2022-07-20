@@ -117,7 +117,7 @@ module.exports = {
         (role_emoji_mapping[product.id] ? role_emoji_mapping[product.id] : ':small_blue_diamond: ') + // 圖標
         `**${product.name}**` + // 商品名稱
         '\n' +
-        ':coin_1:' +
+        '<:coin_1:999163493561409626>' +
         '`' + `${product.price}` + '` ' +
         `目前數量: ${product.amount}個` +
         '\n' +
