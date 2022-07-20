@@ -1,4 +1,5 @@
 const { User } = require("../../schema/user")
+const { ServerPoint } = require("../../schema/serverPoint")
 const { OfficialShop } = require("../../schema/officialShop")
 const { OfficialProduct } = require("../../schema/officialProduct")
 const { Product } = require("../../schema/product")
@@ -10,7 +11,7 @@ const pageSize = 5
 
 module.exports = {
   name: "check_shop",
-  description: "呼叫官方商店 or 指定 某 user 的商店",
+  description: "呼叫未來商城 or 指定 某 user 的商店",
   options: [
     {
       type: 6,
@@ -23,8 +24,8 @@ module.exports = {
 
     // 判斷是否有傳 user 值
     if (!args['user']) {
-      // 沒有則搜尋官方商店並回傳資料
-      // 判斷目前是否有官方商店
+      // 沒有則搜尋未來商城並回傳資料
+      // 判斷目前是否有未來商城
       const officialShop = await OfficialShop.findOne({
         serverId: interaction.guildId
       })
@@ -39,7 +40,7 @@ module.exports = {
         })
         if (!list || !list.length) {
           return error({
-            msg: `目前官方商店尚無商品`,
+            msg: `目前未來商城尚無商品`,
             interaction,
           })
         }
@@ -51,6 +52,11 @@ module.exports = {
           id: item.roleId
         }))
 
+        const point = await ServerPoint.findOne({
+          serverId: interaction.guildId,
+          userDiscordId: interaction.user.id,
+        })
+
 
         return shopMsg({
           is_official: 0, // 0 官方, 1 使用者, 2 拍賣所
@@ -59,6 +65,7 @@ module.exports = {
             ..._.chunk(message_products, pageSize)
           ],
           interaction,
+          point,
         })
       }
 
@@ -99,6 +106,11 @@ module.exports = {
         id: item._id
       }))
 
+      const point = await ServerPoint.findOne({
+        serverId: interaction.guildId,
+        userDiscordId: interaction.user.id,
+      })
+
       return shopMsg({
         is_official: 1, // 0 官方, 1 使用者, 2 拍賣所
         user_name: user.discordName,
@@ -107,6 +119,7 @@ module.exports = {
           ..._.chunk(message_products, pageSize)
         ],
         interaction,
+        point,
       })
 
     }

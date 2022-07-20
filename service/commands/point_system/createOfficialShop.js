@@ -15,7 +15,7 @@ module.exports = {
       // 判斷目前是否有商店
       if (server?.shopId) {
         return error({
-          msg: `本伺服器已創建過官方商店`,
+          msg: `本伺服器已創建過未來商城`,
           interaction,
         });
       }
@@ -31,7 +31,7 @@ module.exports = {
       server.shopId = res.serverId
       await server.save();
       return success({
-        msg: `官方商店已創建`,
+        msg: `未來商城已創建`,
         interaction,
       });
     } catch (error) {

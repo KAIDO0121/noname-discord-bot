@@ -1,7 +1,7 @@
 # For MOD
 
 ```bash
-# 1 - 創建官方商店
+# 1 - 創建未來商城
 /create_official_shop
 # 2 - 創建官方商品
 /create_official_product :role :amount
@@ -10,7 +10,7 @@
 # For 使用者
 
 ```bash
-# 3 - 從官方商店進貨商品
+# 3 - 從未來商城進貨商品
 /income_product :official_product_id :amount
 # 4 - 創建自己的商店
 /create_shop
@@ -18,7 +18,7 @@
 /put_product :product :amount
 # 6 - 下架商品
 /down_product :product :amount
-# 7 - 呼叫官方商店 or 指定 某 user 的商店
+# 7 - 呼叫未來商城 or 指定 某 user 的商店
 /check_shop :user
 
 # 8 - 呼叫自己的商店
@@ -33,13 +33,13 @@
 
 
 # MOD 測試流程
-1. 創建官方商店 /create_official_shop
+1. 創建未來商城 /create_official_shop
 2. 創建官方商品 /create_official_product :role :amount
 
 # 上架自己商品流程
-1. 查看官方商店 /check_shop
+1. 查看未來商城 /check_shop
 2. 複製商品 id
-3. 從官方商店進貨商品 /income_product :official_product_id :amount
+3. 從未來商城進貨商品 /income_product :official_product_id :amount
 4. 上架商品 /put_product :item :price
 
 # 下架自己商品流程

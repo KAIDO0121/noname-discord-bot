@@ -1,4 +1,5 @@
 const { Product } = require("../../schema/product")
+const { ServerPoint } = require("../../schema/serverPoint")
 const { error, shopMsg } = require("../../utils/msgTemplate")
 const { addOrUpdateUser } = require("../../utils/addOrUpdateUser")
 const _ = require('lodash')
@@ -38,6 +39,7 @@ module.exports = {
             ..._.chunk(message_products, 5)
           ],
           interaction,
+          point,
         })
 
       }

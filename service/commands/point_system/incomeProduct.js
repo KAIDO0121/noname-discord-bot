@@ -11,7 +11,7 @@ const { addOrUpdateUser } = require("../../utils/addOrUpdateUser")
 
 module.exports = {
   name: "income_product",
-  description: "從官方商店進貨",
+  description: "從未來商城進貨",
   options: [
       {
         type: 3,
@@ -37,7 +37,7 @@ module.exports = {
 
       if (!officialProduct) {
         return error({
-          msg: `官方商店無此商品`,
+          msg: `未來商城無此商品`,
           interaction,
         });
       }
@@ -72,7 +72,7 @@ module.exports = {
 
       // 進貨
       // 1 扣掉金額
-      // 2 扣除官方商店商品數量
+      // 2 扣除未來商城商品數量
       // 3. 新增 product
       await updateServerPoints({
         serverId: interaction.guildId,

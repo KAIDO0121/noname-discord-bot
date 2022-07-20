@@ -36,7 +36,7 @@ module.exports = {
       
       if (!server?.shopId) {
         return error({
-          msg: '請先使用 `/create_official_shop` 創建官方商店',
+          msg: '請先使用 `/create_official_shop` 創建未來商城',
           interaction,
         });
       }

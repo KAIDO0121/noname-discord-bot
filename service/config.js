@@ -11,7 +11,7 @@ const eventType = {
   add_wallet: "add_wallet",
   remove_wallet: "remove_wallet",
   mee6: "mee6",
-  income_product: "income_product", // 從官方商店進貨商品
+  income_product: "income_product", // 從未來商城進貨商品
   buy_product: "buy_product", // 購買商品
   sell_product: "sell_product", // 賣出商品
   receive_point: "receive_point", // 收款

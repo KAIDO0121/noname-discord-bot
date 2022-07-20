@@ -12,6 +12,12 @@ const _ = require('lodash')
 const { addOrUpdateUser } = require("../utils/addOrUpdateUser")
 const ObjectId = require('mongoose').Types.ObjectId
 
+const role_emoji_mapping = {
+  "992272596064292884": ":Astronaut2099:", // 2D化日式風格NFT
+  "992274050720202845": "💇‍♀️", // 未來美髮造型卷
+  "996510630557274152": "🤦‍♀️", // 未來醫美整容卷
+  "992275729456844891": "🎟️", // 超級抽獎卷
+}
 const number_emoji_list = [
   'zero',
   'one',
@@ -82,16 +88,16 @@ module.exports = {
     }
   },
 
-  shopMsg: async ({ interaction, is_official = 0, user_name, productChunk, hint }) => {
+  shopMsg: async ({ interaction, is_official = 0, user_name, productChunk, hint, point }) => {
     let shop_name
     if (is_official == 0) {
-      shop_name = '官方商店'
+      shop_name = '未來商城'
     } else if (is_official == 1) {
       shop_name = `${user_name}的商店`
     } else if (is_official == 2) {
       shop_name = '拍賣所'
     } else {
-      shop_name = '官方商店'
+      shop_name = '未來商城'
     }
     let shop_hint
     if (hint) {
@@ -100,26 +106,29 @@ module.exports = {
       shop_hint = (is_official != 1 || is_official != 2) ? '你可以使用 `/income_product [商品id] [數量]` 來進貨商品 \n\n' : '你可以使用 `/put_product [商品id]` 上架商品到自己的商店 \n\n'
     }
 
+    let ur_balance = `**您的餘額：** :coin_1:${point.totalPoints}\n\n`
+
     const embeds = []
     productChunk.forEach((products, index) => {
       // 序數 圖標 商品名稱
       // 錢幣 金額 
       const products_list_text = products.map((product, index) =>
         `:${number_emoji_list[index + 1]}: ` + // 序數
-        ':small_blue_diamond: ' + // 圖標
+        (role_emoji_mapping[product.id] ? role_emoji_mapping[product.id] : ':small_blue_diamond: ') + // 圖標
         `**${product.name}**` + // 商品名稱
         '\n' +
-        ':coin:  ' +
+        ':coin_1:' +
         '`' + `${product.price}` + '` ' +
         `目前數量: ${product.amount}個` +
         '\n' +
         '商品id:' + '`' + `${product.id}` + '`' +
         '\n').join('\n')
+      console.log(products_list_text, 'products_list_text')
       embeds.push(new MessageEmbed()
         .setColor("#0099ff")
         .setTitle(`${shop_name} - Page ${index + 1}/${productChunk.length}`)
         .setDescription(
-          user_name + " " + shop_hint +
+          user_name + " " + shop_hint + ur_balance +
           products_list_text
         ))
     })
@@ -243,7 +252,7 @@ module.exports = {
           item: value
         }
         try {
-          // 從官方商店進貨
+          // 從未來商城進貨
           if (is_official == 0) {
             await addOrUpdateUser(interaction)
 
@@ -254,7 +263,7 @@ module.exports = {
 
             if (!officialProduct) {
               await interaction.editReply({
-                embeds: [replyEmbed("官方商店無此商品")],
+                embeds: [replyEmbed("未來商城無此商品")],
                 components: [],
               }).then(() => console.log("Reply sent."))
                 .catch(console.error)
@@ -297,7 +306,7 @@ module.exports = {
 
             // 進貨
             // 1 扣掉金額
-            // 2 扣除官方商店商品數量
+            // 2 扣除未來商城商品數量
             // 3. 新增 product
             await updateServerPoints({
               serverId: interaction.guildId,

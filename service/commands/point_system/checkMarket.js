@@ -1,4 +1,5 @@
 const { User } = require("../../schema/user")
+const { ServerPoint } = require("../../schema/serverPoint")
 const { OfficialShop } = require("../../schema/officialShop")
 const { OfficialProduct } = require("../../schema/officialProduct")
 const { Product } = require("../../schema/product")
@@ -34,6 +35,11 @@ module.exports = {
         id: item._id
       }))
 
+      const point = await ServerPoint.findOne({
+        serverId: interaction.guildId,
+        userDiscordId: interaction.user.id,
+      })
+
       return shopMsg({
         is_official: 2, // 0 官方, 1 使用者, 2 拍賣所
         user_name: '',
@@ -42,6 +48,7 @@ module.exports = {
           ..._.chunk(message_products, pageSize)
         ],
         interaction,
+        point,
       })
 
     }
