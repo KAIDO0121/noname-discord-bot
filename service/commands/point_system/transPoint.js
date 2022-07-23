@@ -72,12 +72,12 @@ module.exports = {
       const user = await User.findOne({
         discordId: interaction.user.id,
       })
-      // if (interaction.user.id === args['user_to_transfer']) {
-      //   return error({
-      //     msg: `轉帳用戶請勿輸入自己的帳號`,
-      //     interaction,
-      //   })
-      // }
+      if (interaction.user.id === args['user_to_transfer']) {
+        return error({
+          msg: `轉帳用戶請勿輸入自己的帳號`,
+          interaction,
+        })
+      }
       // DM 訊息
       const sender = await client.users.fetch(args['user_to_transfer'])
       const row = new MessageActionRow()
