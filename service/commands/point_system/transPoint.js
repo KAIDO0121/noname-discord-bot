@@ -49,7 +49,7 @@ module.exports = {
         })
       }
 
-      if (args['amount'] > point) {
+      if (args['amount'] > point.totalPoints) {
         return error({
           msg: `帳戶餘額不足`,
           interaction,
