@@ -42,6 +42,13 @@ module.exports = {
         userDiscordId: interaction.user.id,
       })
 
+      if (Number(args['amount']) <= 0) {
+        return error({
+          msg: `轉帳金額不可為負數或零`,
+          interaction,
+        })
+      }
+
       if (args['amount'] > point) {
         return error({
           msg: `帳戶餘額不足`,

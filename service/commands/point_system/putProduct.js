@@ -49,6 +49,15 @@ module.exports = {
           interaction,
         })
       }
+
+      // 價格不能為負數
+      if (Number(args['price']) <= 0) {
+        return error({
+          msg: `商品價格不能為負數或零`,
+          interaction,
+        })
+      }
+
       product.price = args['price']
       
       if (args['is_own_shop']) {

@@ -19,6 +19,11 @@ module.exports = {
         serverId: interaction.guildId,
       })
 
+      const point = await ServerPoint.findOne({
+        serverId: interaction.guildId,
+        userDiscordId: interaction.user.id,
+      })
+
       if (!products || products.length == 0) {
         return error({
           msg: '目前商店尚無商品',

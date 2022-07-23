@@ -35,6 +35,13 @@ module.exports = {
         roleId: args['item']
       })
 
+      if (Number(args['amount']) <= 0) {
+        return error({
+          msg: `進貨數量不可為負數或零`,
+          interaction,
+        })
+      }
+
       if (!officialProduct) {
         return error({
           msg: `未來商城無此商品`,

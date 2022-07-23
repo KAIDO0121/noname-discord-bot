@@ -40,6 +40,21 @@ module.exports = {
           interaction,
         });
       }
+
+      // 價格不能為負數
+      if (Number(args['price']) <= 0) {
+        return error({
+          msg: `商品價格不能為負數或零`,
+          interaction,
+        })
+      }
+
+      if (Number(args['amount']) <= 0) {
+        return error({
+          msg: `上架數量不可為負數或零`,
+          interaction,
+        })
+      }
       
       // 判斷有沒有重複商品
       const officialProduct = await OfficialProduct.findOne({

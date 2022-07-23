@@ -55,6 +55,14 @@ module.exports = {
         });
       }
 
+      // 價格不能為負數
+      if (product.price <= 0) {
+        return error({
+          msg: `商品價格不能為負數或零`,
+          interaction,
+        })
+      }
+
       if (product.price > point?.totalPoints) {
         return error({
           msg: `商品金額大於我的餘額`,
