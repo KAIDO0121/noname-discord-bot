@@ -1,5 +1,6 @@
 const { User } = require("../../schema/user")
 const { error, success } = require("../../utils/msgTemplate")
+const Mee6LevelsApi = require("mee6-levels-api")
 const { Product } = require("../../schema/product")
 const { ServerPoint } = require("../../schema/serverPoint")
 const { updateServerPoints } = require("../../crud/updateServerPoints")
@@ -13,7 +14,7 @@ const { MessageActionRow, MessageButton } = require('discord.js')
 
 
 const { Server } = require("../../schema/server")
-const user = require('../../schema/user')
+// const user = require('../../schema/user')
 
 module.exports = {
   name: "trans_point",
@@ -35,6 +36,23 @@ module.exports = {
   run: async (client, interaction, args) => {
     try {
       await addOrUpdateUser(interaction)
+
+      const user = await User.findOne({
+        serverId: interaction.guildId,
+        userDiscordId: interaction.user.id,
+      });
+
+      const mee6UserData = await Mee6LevelsApi.getUserXp(interaction.guildId, interaction.user.id)
+      let level = 0
+      if (mee6UserData) {
+        level = mee6UserData.level
+      }
+      if (level < 10) {
+        return error({
+          msg: `目前等級不足，無法轉帳，需達到等級10，目前等級${level}`,
+          interaction,
+        })
+      }
 
       // 檢查帳戶餘額是否足夠
       const point = await ServerPoint.findOne({
@@ -69,9 +87,6 @@ module.exports = {
       }
 
       // 欲轉帳的用戶非自己
-      const user = await User.findOne({
-        discordId: interaction.user.id,
-      })
       if (interaction.user.id === args['user_to_transfer']) {
         return error({
           msg: `轉帳用戶請勿輸入自己的帳號`,
