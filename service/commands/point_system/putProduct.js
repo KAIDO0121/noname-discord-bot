@@ -2,6 +2,7 @@ const { Product } = require("../../schema/product")
 const { error, success } = require("../../utils/msgTemplate")
 const { addOrUpdateUser } = require("../../utils/addOrUpdateUser")
 const ObjectId = require('mongoose').Types.ObjectId;
+const { isNum } = require('../../utils/validate')
 
 module.exports = {
   name: "put_product",
@@ -46,6 +47,13 @@ module.exports = {
       if (!product) {
         return error({
           msg: `背包無此商品，上架失敗，請注意商品id`,
+          interaction,
+        })
+      }
+
+      if (!isNum(args['price'])) {
+        return error({
+          msg: `商品金額必須為整數`,
           interaction,
         })
       }

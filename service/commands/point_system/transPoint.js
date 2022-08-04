@@ -10,6 +10,8 @@ const _ = require('lodash')
 const { addOrUpdateUser } = require("../../utils/addOrUpdateUser")
 const { MessageActionRow, MessageButton } = require('discord.js')
 
+const { isNum } = require('../../utils/validate')
+
 
 
 
@@ -41,6 +43,13 @@ module.exports = {
         serverId: interaction.guildId,
         userDiscordId: interaction.user.id,
       });
+
+      if (!isNum(args['amount'])) {
+        return error({
+          msg: `轉帳金額必須為整數`,
+          interaction,
+        })
+      }
 
       const mee6UserData = await Mee6LevelsApi.getUserXp(interaction.guildId, interaction.user.id)
       let level = 0

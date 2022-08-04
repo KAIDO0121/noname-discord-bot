@@ -2,7 +2,7 @@ const { MessageEmbed, MessageActionRow, MessageButton, MessageSelectMenu, ModalB
 const { description } = require('../commands/setPickRole')
 
 const { User } = require("../schema/user")
-const { OfficialProduct } = require("../schema/officialProduct");
+const { OfficialProduct } = require("../schema/officialProduct")
 const { Product } = require("../schema/product")
 const { ServerPoint } = require("../schema/serverPoint")
 const { updateServerPoints } = require("../crud/updateServerPoints")
@@ -124,13 +124,21 @@ module.exports = {
         '商品id:' + '`' + `${product.id}` + '`' +
         '\n').join('\n')
       console.log(products_list_text, 'products_list_text')
-      embeds.push(new MessageEmbed()
+      embeds.push(is_official == 0 ? new MessageEmbed()
         .setColor("#0099ff")
         .setTitle(`${shop_name} - Page ${index + 1}/${productChunk.length}`)
         .setDescription(
           user_name + " " + shop_hint + ur_balance +
           products_list_text
-        ))
+        ).setImage('https://i.imgur.com/jt7CoUf.gif')
+        : new MessageEmbed()
+          .setColor("#0099ff")
+          .setTitle(`${shop_name} - Page ${index + 1}/${productChunk.length}`)
+          .setDescription(
+            user_name + " " + shop_hint + ur_balance +
+            products_list_text
+          ))
+
     })
 
     const replyEmbed = (msg) => {

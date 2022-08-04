@@ -5,6 +5,8 @@ const { OfficialProduct } = require("../../schema/officialProduct");
 
 const { Server } = require("../../schema/server");
 const { addOrUpdateUser } = require("../../utils/addOrUpdateUser")
+const { isNum } = require('../../utils/validate')
+
 
 module.exports = {
   name: "create_official_product",
@@ -33,6 +35,20 @@ module.exports = {
     await addOrUpdateUser(interaction)
     try {
       const server = await Server.findOne({ serverId: interaction.guildId });
+
+      if (!isNum(args['amount'])) {
+        return error({
+          msg: `上架數量必須為整數`,
+          interaction,
+        })
+      }
+
+      if (!isNum(args['price'])) {
+        return error({
+          msg: `商品價格必須為整數`,
+          interaction,
+        })
+      }
       
       if (!server?.shopId) {
         return error({

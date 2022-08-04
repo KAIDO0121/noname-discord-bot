@@ -9,6 +9,8 @@ const _ = require('lodash')
 
 const { addOrUpdateUser } = require("../../utils/addOrUpdateUser")
 
+const { isNum } = require('../../utils/validate')
+
 module.exports = {
   name: "income_product",
   description: "從未來商城進貨",
@@ -34,6 +36,13 @@ module.exports = {
       const officialProduct = await OfficialProduct.findOne({
         roleId: args['item']
       })
+
+      if (!isNum(args['amount'])) {
+        return error({
+          msg: `進貨數量必須為整數`,
+          interaction,
+        })
+      }
 
       if (Number(args['amount']) <= 0) {
         return error({

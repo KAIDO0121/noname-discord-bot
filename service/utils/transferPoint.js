@@ -3,6 +3,7 @@ const { updateServerPoints } = require("../crud/updateServerPoints")
 const { updatePointAdjustLog } = require("../crud/updatePointAdjustLog")
 const { eventType } = require("../config")
 const { success } = require("../utils/msgTemplate")
+const server = require('../schema/server')
 
 module.exports = {
   transferPoint: async (interaction) => {
@@ -38,6 +39,8 @@ module.exports = {
       userDiscordId: interaction.user.id,
       eventType: eventType.receive_point,
     })
+
+    // { amount: 50, eventType: "receive_point"}
 
     await interaction.message.delete();
 
